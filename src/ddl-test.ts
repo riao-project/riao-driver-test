@@ -1,10 +1,10 @@
 import 'jasmine';
-import { ColumnType, DatabaseDriverInterface } from 'riao-dbal/src';
+import { ColumnType, DatabaseDriver } from 'riao-dbal/src';
 import { TestOptions } from './test-options';
 
 export const ddlTest = (options: TestOptions) =>
 	describe(options.name + ' Data Definition', () => {
-		let conn: DatabaseDriverInterface;
+		let conn: DatabaseDriver;
 
 		beforeAll(async () => {
 			conn = new options.driver();
