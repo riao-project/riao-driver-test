@@ -1,17 +1,25 @@
 import 'jasmine';
 import { TestOptions } from './test-options';
+import { Database } from 'riao-dbal/src';
+import { getDatabase } from './init';
 
 export const connectionTest = (options: TestOptions) =>
 	describe(options.name + ' Connection', () => {
+		let db: Database;
+
+		beforeAll(async () => {
+			db = await getDatabase(options);
+		});
+
 		it('can connect', async () => {
-			const connection = new options.driver();
+			const connection = new db.driverType();
 			await connection.connect(options.connectionOptions);
 
 			expect(connection).toBeTruthy();
 		});
 
 		it('can disconnect', async () => {
-			const connection = new options.driver();
+			const connection = new db.driverType();
 			await connection.connect(options.connectionOptions);
 			await connection.disconnect();
 
@@ -19,7 +27,7 @@ export const connectionTest = (options: TestOptions) =>
 		});
 
 		it('can get the version', async () => {
-			const connection = new options.driver();
+			const connection = new db.driverType();
 			await connection.connect(options.connectionOptions);
 			const version = await connection.getVersion();
 

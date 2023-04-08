@@ -1,8 +1,8 @@
-import { DatabaseConnectionOptions, DatabaseDriver } from 'riao-dbal/src';
+import { DatabaseConnectionOptions, Database } from 'riao-dbal/src';
 
 export interface TestOptions {
 	name: string;
-	driver: typeof DatabaseDriver;
+	db: typeof Database;
 	expectedVersion: RegExp;
 	connectionOptions: DatabaseConnectionOptions;
 }
