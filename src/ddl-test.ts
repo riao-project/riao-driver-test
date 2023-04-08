@@ -15,7 +15,13 @@ export const ddlTest = (options: TestOptions) =>
 					'create_test',
 					'create_pk_test',
 					'create_auto_increment_test',
+					'create_fk_test_child',
 				],
+				ifExists: true,
+			});
+
+			await db.ddl.dropTable({
+				names: ['create_fk_test_parent'],
 				ifExists: true,
 			});
 		});
@@ -54,6 +60,40 @@ export const ddlTest = (options: TestOptions) =>
 						type: ColumnType.BIGINT,
 						primaryKey: true,
 						autoIncrement: true,
+					},
+				],
+			});
+		});
+
+		it('can create a table w/ foreign keys', async () => {
+			await db.ddl.createTable({
+				name: 'create_fk_test_parent',
+				columns: [
+					{
+						name: 'id',
+						type: ColumnType.BIGINT,
+						primaryKey: true,
+					},
+				],
+			});
+
+			await db.ddl.createTable({
+				name: 'create_fk_test_child',
+				columns: [
+					{
+						name: 'id',
+						type: ColumnType.BIGINT,
+					},
+					{
+						name: 'parent',
+						type: ColumnType.BIGINT,
+					},
+				],
+				foreignKeys: [
+					{
+						columns: ['parent'],
+						referencesTable: 'create_fk_test_parent',
+						referencesColumns: ['id'],
 					},
 				],
 			});
