@@ -11,7 +11,11 @@ export const ddlTest = (options: TestOptions) =>
 			db = await getDatabase(options);
 
 			await db.ddl.dropTable({
-				names: ['create_test', 'create_pk_test'],
+				names: [
+					'create_test',
+					'create_pk_test',
+					'create_auto_increment_test',
+				],
 				ifExists: true,
 			});
 		});
@@ -36,6 +40,20 @@ export const ddlTest = (options: TestOptions) =>
 						name: 'id',
 						type: ColumnType.BIGINT,
 						primaryKey: true,
+					},
+				],
+			});
+		});
+
+		it('can create an auto-incrementing key', async () => {
+			await db.ddl.createTable({
+				name: 'create_auto_increment_test',
+				columns: [
+					{
+						name: 'id',
+						type: ColumnType.BIGINT,
+						primaryKey: true,
+						autoIncrement: true,
 					},
 				],
 			});
