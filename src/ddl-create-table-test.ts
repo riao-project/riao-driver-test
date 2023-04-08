@@ -3,7 +3,7 @@ import { ColumnType, CreateTableOptions, Database } from 'riao-dbal/src';
 import { TestOptions } from './test-options';
 import { getDatabase } from './init';
 
-export const ddlTest = (options: TestOptions) =>
+export const ddlCreateTableTest = (options: TestOptions) =>
 	describe(options.name + ' Data Definition', () => {
 		let db: Database;
 
