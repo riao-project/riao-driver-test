@@ -11,7 +11,7 @@ export const ddlTest = (options: TestOptions) =>
 			db = await getDatabase(options);
 
 			await db.ddl.dropTable({
-				names: ['create_test'],
+				names: ['create_test', 'create_pk_test'],
 				ifExists: true,
 			});
 		});
@@ -23,6 +23,19 @@ export const ddlTest = (options: TestOptions) =>
 					{
 						name: 'id',
 						type: ColumnType.BIGINT,
+					},
+				],
+			});
+		});
+
+		it('can create a primary key', async () => {
+			await db.ddl.createTable({
+				name: 'create_pk_test',
+				columns: [
+					{
+						name: 'id',
+						type: ColumnType.BIGINT,
+						primaryKey: true,
 					},
 				],
 			});
