@@ -1,5 +1,5 @@
 import 'jasmine';
-import { ColumnType, Database } from 'riao-dbal/src';
+import { ColumnType, CreateTableOptions, Database } from 'riao-dbal/src';
 import { TestOptions } from './test-options';
 import { getDatabase } from './init';
 
@@ -16,6 +16,7 @@ export const ddlTest = (options: TestOptions) =>
 					'create_pk_test',
 					'create_auto_increment_test',
 					'create_fk_test_child',
+					'create_if_not_exists_test',
 				],
 				ifExists: true,
 			});
@@ -97,5 +98,22 @@ export const ddlTest = (options: TestOptions) =>
 					},
 				],
 			});
+		});
+
+		it('can create a table if not exists', async () => {
+			const table: CreateTableOptions = {
+				name: 'create_if_not_exists_test',
+				columns: [
+					{
+						name: 'id',
+						type: ColumnType.BIGINT,
+						primaryKey: true,
+					},
+				],
+				ifNotExists: true,
+			};
+
+			await db.ddl.createTable(table);
+			await db.ddl.createTable(table);
 		});
 	});
