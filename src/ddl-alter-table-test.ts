@@ -11,7 +11,7 @@ export const ddlAlterTableTest = (options: TestOptions) =>
 			db = await getDatabase(options);
 
 			await db.ddl.dropTable({
-				names: ['add_columns_test'],
+				names: ['add_columns_test', 'alter_fk_test_child'],
 				ifExists: true,
 			});
 
@@ -41,6 +41,42 @@ export const ddlAlterTableTest = (options: TestOptions) =>
 						length: 255,
 					},
 				],
+			});
+		});
+
+		it('can add foreign keys', async () => {
+			await db.ddl.createTable({
+				name: 'alter_fk_test_parent',
+				columns: [
+					{
+						name: 'id',
+						type: ColumnType.BIGINT,
+						primaryKey: true,
+					},
+				],
+			});
+
+			await db.ddl.createTable({
+				name: 'alter_fk_test_child',
+				columns: [
+					{
+						name: 'id',
+						type: ColumnType.BIGINT,
+					},
+					{
+						name: 'parent',
+						type: ColumnType.BIGINT,
+					},
+				],
+			});
+
+			await db.ddl.addForeignKey({
+				table: 'alter_fk_test_child',
+				fk: {
+					columns: ['parent'],
+					referencesTable: 'alter_fk_test_parent',
+					referencesColumns: ['id'],
+				},
 			});
 		});
 	});
