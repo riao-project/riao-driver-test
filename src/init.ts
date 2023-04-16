@@ -2,7 +2,7 @@ import { TestOptions } from './test-options';
 import { Database } from 'riao-dbal/src';
 
 /**
- * Setup the db server with a database & user for testing
+ * Setup the db server with a database for testing
  *
  * @param options Test options
  */
@@ -10,10 +10,7 @@ async function createDatabase(options: TestOptions): Promise<void> {
 	const db = new (options.db as { new (): Database })();
 
 	await db.setup({
-		host: options.connectionOptions.host,
-		port: options.connectionOptions.port,
-		username: options.rootUsername,
-		password: options.rootPassword,
+		...options.connectionOptions,
 		database: options.rootDatabase,
 	});
 
@@ -24,22 +21,8 @@ async function createDatabase(options: TestOptions): Promise<void> {
 		ifExists: true,
 	});
 
-	await db.ddl.dropUser({
-		names: options.connectionOptions.username,
-		ifExists: true,
-	});
-
 	await db.ddl.createDatabase({ name: options.connectionOptions.database });
-	await db.ddl.createUser({
-		name: options.connectionOptions.username,
-		password: options.connectionOptions.password,
-	});
-
-	await db.ddl.grant({
-		privileges: 'ALL',
-		on: '*',
-		to: options.connectionOptions.username,
-	});
+	await db.disconnect();
 }
 
 async function initDatabase(options: TestOptions): Promise<Database> {
