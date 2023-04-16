@@ -4,7 +4,7 @@ import { TestOptions } from './test-options';
 import { getDatabase } from './init';
 
 export const ddlCreateDatabaseTest = (options: TestOptions) =>
-	describe(options.name + ' Data Definition', () => {
+	describe(options.name + ' Create Database', () => {
 		let db: Database;
 
 		beforeAll(async () => {
@@ -17,9 +17,8 @@ export const ddlCreateDatabaseTest = (options: TestOptions) =>
 		});
 
 		it('can create a database', async () => {
-			await db.ddl.dropDatabase({
+			await db.ddl.createDatabase({
 				name: 'create_db_test',
-				ifExists: true,
 			});
 		});
 	});

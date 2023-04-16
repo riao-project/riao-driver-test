@@ -4,7 +4,7 @@ import { TestOptions } from './test-options';
 import { getDatabase } from './init';
 
 export const ddlTruncateTableTest = (options: TestOptions) =>
-	describe(options.name + ' Data Definition', () => {
+	describe(options.name + ' Truncate', () => {
 		let db: Database;
 
 		beforeAll(async () => {

@@ -4,7 +4,7 @@ import { TestOptions } from './test-options';
 import { getDatabase } from './init';
 
 export const ddlCreateTableTest = (options: TestOptions) =>
-	describe(options.name + ' Data Definition', () => {
+	describe(options.name + ' Create Table', () => {
 		let db: Database;
 
 		beforeAll(async () => {
