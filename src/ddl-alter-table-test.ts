@@ -11,7 +11,11 @@ export const ddlAlterTableTest = (options: TestOptions) =>
 			db = await getDatabase(options);
 
 			await db.ddl.dropTable({
-				names: ['add_columns_test', 'alter_fk_test_child'],
+				names: [
+					'add_columns_test',
+					'alter_fk_test_child',
+					'change_columns_test',
+				],
 				ifExists: true,
 			});
 
@@ -76,6 +80,27 @@ export const ddlAlterTableTest = (options: TestOptions) =>
 					columns: ['parent'],
 					referencesTable: 'alter_fk_test_parent',
 					referencesColumns: ['id'],
+				},
+			});
+		});
+
+		it('can change columns', async () => {
+			await db.ddl.createTable({
+				name: 'change_columns_test',
+				columns: [
+					{
+						name: 'id',
+						type: ColumnType.INT,
+					},
+				],
+			});
+
+			await db.ddl.changeColumn({
+				table: 'change_columns_test',
+				column: 'id',
+				options: {
+					name: 'bigId',
+					type: ColumnType.BIGINT,
 				},
 			});
 		});
