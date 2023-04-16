@@ -5,4 +5,7 @@ export interface TestOptions {
 	db: typeof Database;
 	expectedVersion: RegExp;
 	connectionOptions: DatabaseConnectionOptions;
+	rootUsername: string;
+	rootPassword: string;
+	rootDatabase: string;
 }
