@@ -15,7 +15,6 @@ async function createDatabase(options: TestOptions): Promise<void> {
 	});
 
 	await db.init();
-
 	await db.ddl.dropDatabase({
 		name: options.connectionOptions.database,
 		ifExists: true,
@@ -25,8 +24,13 @@ async function createDatabase(options: TestOptions): Promise<void> {
 	await db.disconnect();
 }
 
-async function initDatabase(options: TestOptions): Promise<Database> {
-	await createDatabase(options);
+async function initDatabase(
+	options: TestOptions,
+	recreate = true
+): Promise<Database> {
+	if (recreate) {
+		await createDatabase(options);
+	}
 
 	const db = new (options.db as { new (): Database })();
 
@@ -39,10 +43,12 @@ async function initDatabase(options: TestOptions): Promise<Database> {
 
 const databases: { [key: string]: Database } = {};
 
-export async function getDatabase(options: TestOptions) {
-	if (!databases[options.name]) {
-		databases[options.name] = await initDatabase(options);
+export async function getDatabase(options: TestOptions, recreate = true) {
+	const name = options.name + '-' + options.connectionOptions.database;
+
+	if (!databases[name]) {
+		databases[name] = await initDatabase(options, recreate);
 	}
 
-	return databases[options.name];
+	return databases[name];
 }
