@@ -9,6 +9,8 @@ import { Database } from 'riao-dbal/src';
 async function createDatabase(options: TestOptions): Promise<void> {
 	const db = new (options.db as { new (): Database })();
 
+	db.name = 'testdb';
+
 	await db.setup({
 		...options.connectionOptions,
 		database: options.rootDatabase,
@@ -36,6 +38,7 @@ async function initDatabase(
 
 	await db.setup(options.connectionOptions);
 
+	db.name = 'testdb';
 	await db.init();
 
 	return db;
