@@ -29,7 +29,7 @@ export const ddlTruncateTableTest = (options: TestOptions) =>
 			});
 
 			await db.ddl.truncate({
-				name: 'truncate_test',
+				table: 'truncate_test',
 			});
 		});
 	});

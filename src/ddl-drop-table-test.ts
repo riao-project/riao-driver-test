@@ -24,7 +24,7 @@ export const ddlDropTableTest = (options: TestOptions) =>
 			});
 
 			await db.ddl.dropTable({
-				names: ['drop_test'],
+				tables: ['drop_test'],
 			});
 		});
 	});

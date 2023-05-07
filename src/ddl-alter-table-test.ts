@@ -11,7 +11,7 @@ export const ddlAlterTableTest = (options: TestOptions) =>
 			db = await getDatabase(options);
 
 			await db.ddl.dropTable({
-				names: [
+				tables: [
 					'add_columns_test',
 					'alter_fk_test_child',
 					'change_columns_test',
@@ -20,7 +20,7 @@ export const ddlAlterTableTest = (options: TestOptions) =>
 			});
 
 			await db.ddl.dropTable({
-				names: ['alter_fk_test_parent'],
+				tables: ['alter_fk_test_parent'],
 				ifExists: true,
 			});
 		});

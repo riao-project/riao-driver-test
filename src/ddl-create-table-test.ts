@@ -11,7 +11,7 @@ export const ddlCreateTableTest = (options: TestOptions) =>
 			db = await getDatabase(options);
 
 			await db.ddl.dropTable({
-				names: [
+				tables: [
 					'create_test',
 					'create_pk_test',
 					'create_auto_increment_test',
@@ -22,7 +22,7 @@ export const ddlCreateTableTest = (options: TestOptions) =>
 			});
 
 			await db.ddl.dropTable({
-				names: ['create_fk_test_parent'],
+				tables: ['create_fk_test_parent'],
 				ifExists: true,
 			});
 		});

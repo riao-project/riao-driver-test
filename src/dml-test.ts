@@ -11,7 +11,7 @@ export const dmlTest = (options: TestOptions) =>
 			db = await getDatabase(options);
 
 			await db.ddl.dropTable({
-				names: 'query_test',
+				tables: 'query_test',
 				ifExists: true,
 			});
 
