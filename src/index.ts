@@ -8,6 +8,7 @@ import { TestOptions } from './test-options';
 import { ddlAlterTableTest } from './ddl-alter-table-test';
 import { ddlCreateDatabaseTest } from './ddl-create-database-test';
 import { ddlGrantTest } from './ddl-grant-test';
+import { schemaQueryRepositoryTest } from './schema-query-repository-test';
 
 export const test = (options: TestOptions) => {
 	jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000;
@@ -19,4 +20,5 @@ export const test = (options: TestOptions) => {
 	ddlGrantTest(options);
 	ddlTruncateTableTest(options);
 	dmlTest(options);
+	schemaQueryRepositoryTest(options);
 };
