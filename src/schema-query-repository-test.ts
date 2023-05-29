@@ -35,30 +35,37 @@ export const schemaQueryRepositoryTest = (options: TestOptions) =>
 			});
 		});
 
-		it('can get information about all tables', async () => {
-			const tables = (await repo.getTables()).filter(
-				(table) => table.name === 'schema_query_test'
-			);
+		it('can get schema information', async () => {
+			const schema = await repo.getSchema();
 
-			expect(tables).toEqual(<any>[
-				{
-					name: 'schema_query_test',
-					type: 'table',
-					columns: [
-						{
-							name: 'id',
-							type: ColumnType.BIGINT,
-							primaryKey: true,
+			for (const key in schema.tables) {
+				if (key !== 'schema_query_test') {
+					delete schema.tables[key];
+				}
+			}
+
+			expect(schema as any).toEqual({
+				tables: {
+					schema_query_test: {
+						name: 'schema_query_test',
+						type: 'table',
+						columns: {
+							id: {
+								name: 'id',
+								type: ColumnType.BIGINT,
+								primaryKey: true,
+							},
+							fname: {
+								name: 'fname',
+								type: ColumnType.VARCHAR,
+								primaryKey: false,
+								//length: 255,
+							},
 						},
-						{
-							name: 'fname',
-							type: ColumnType.VARCHAR,
-							primaryKey: false,
-						},
-					],
-					primaryKey: 'id',
+						primaryKey: 'id',
+					},
 				},
-			]);
+			});
 		});
 
 		it('can get the primary key for a table', async () => {
