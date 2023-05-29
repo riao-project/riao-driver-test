@@ -1,26 +1,34 @@
 import 'jasmine';
-import { ColumnType, Database } from 'riao-dbal/src';
+import { ColumnType, Database, QueryRepository } from 'riao-dbal/src';
 import { TestOptions } from './test-options';
 import { getDatabase } from './init';
+
+interface User {
+	myid?: number;
+	fname: string;
+}
 
 export const dmlTest = (options: TestOptions) =>
 	describe(options.name + ' Query', () => {
 		let db: Database;
+		let users: QueryRepository<User>;
 
 		beforeAll(async () => {
 			db = await getDatabase(options);
 
 			await db.ddl.dropTable({
-				tables: 'query_test',
+				tables: 'insert_test',
 				ifExists: true,
 			});
 
 			await db.ddl.createTable({
-				name: 'query_test',
+				name: 'insert_test',
 				columns: [
 					{
-						name: 'id',
+						name: 'myid',
 						type: ColumnType.BIGINT,
+						primaryKey: true,
+						autoIncrement: true,
 					},
 					{
 						name: 'fname',
@@ -29,17 +37,26 @@ export const dmlTest = (options: TestOptions) =>
 					},
 				],
 			});
+
+			await db.buildSchema();
+			const schema = await db.getSchema();
+
+			if (Object.keys(schema.tables).length < 1) {
+				throw new Error('Schema has 0 tables');
+			}
+
+			users = db.getQueryRepository<User>({ table: 'insert_test' });
 		});
 
-		it('insert rows', async () => {
-			await db.query.insert({
-				table: 'query_test',
+		it('can insert rows', async () => {
+			const results = await users.insert({
 				records: [
 					{
-						id: 5,
 						fname: 'Test',
 					},
 				],
 			});
+
+			expect(+results[0].myid).toEqual(1);
 		});
 	});
