@@ -9,7 +9,7 @@ interface User {
 }
 
 export const dmlTest = (options: TestOptions) =>
-	describe(options.name + ' Query', () => {
+	describe(options.name + ' Insert', () => {
 		let db: Database;
 		let users: QueryRepository<User>;
 
