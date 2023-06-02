@@ -4,12 +4,12 @@ import { TestOptions } from './test-options';
 import { getDatabase } from './init';
 
 interface User {
-	myid?: number;
+	myid: number;
 	fname: string;
 }
 
 export const dmlTest = (options: TestOptions) =>
-	describe(options.name + ' Insert', () => {
+	describe(options.name + ' Query', () => {
 		let db: Database;
 		let users: QueryRepository<User>;
 
@@ -49,7 +49,7 @@ export const dmlTest = (options: TestOptions) =>
 		});
 
 		it('can insert rows', async () => {
-			const results = await users.insert({
+			let results = await users.insert({
 				records: [
 					{
 						fname: 'Test',
@@ -58,5 +58,21 @@ export const dmlTest = (options: TestOptions) =>
 			});
 
 			expect(+results[0].myid).toEqual(1);
+
+			results = await users.insert({
+				records: [
+					{
+						fname: 'Bob',
+					},
+					{
+						fname: 'Tom',
+					},
+				],
+			});
+
+			expect(+results[0].myid).toEqual(2);
+
+			// Note: This does not work in mysql! vvv
+			//expect(+results[1].myid).toEqual(3);
 		});
 	});
