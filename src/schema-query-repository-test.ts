@@ -69,7 +69,7 @@ export const schemaQueryRepositoryTest = (options: TestOptions) =>
 		});
 
 		it('can get the primary key for a table', async () => {
-			const result = await repo.getPrimaryKey({
+			const result = await repo.getPrimaryKeyName({
 				table: 'schema_query_test',
 			});
 
