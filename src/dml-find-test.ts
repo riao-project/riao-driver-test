@@ -52,4 +52,40 @@ export const dmlFind = (options: TestOptions) =>
 			expect(results[0].fname).toEqual('Tom');
 			expect(results[0].email).toEqual('tom@myusers.com');
 		});
+
+		it('can find where (AND)', async () => {
+			const results = await users.find({
+				where: {
+					fname: 'Bob',
+					email: 'bob@myusers.com',
+				},
+			});
+
+			expect(results.length).toBe(1);
+			expect(+results[0].myid).toEqual(1);
+		});
+
+		it('can find where (OR)', async () => {
+			const results = await users.find({
+				where: [{ fname: 'Bob' }, 'or', { fname: 'Tom' }],
+			});
+
+			expect(results.length).toBe(2);
+			expect(+results[0].myid).toEqual(1);
+			expect(+results[1].myid).toEqual(2);
+		});
+
+		it('can find where (nested)', async () => {
+			const results = await users.find({
+				where: [
+					{ fname: 'bob' },
+					'or',
+					[{ fname: 'tom' }, 'and', { email: 'tom@myusers.com' }],
+				],
+			});
+
+			expect(results.length).toBe(2);
+			expect(+results[0].myid).toEqual(1);
+			expect(+results[1].myid).toEqual(2);
+		});
 	});
