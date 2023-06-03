@@ -12,6 +12,7 @@ import { schemaQueryRepositoryTest } from './schema-query-repository-test';
 import { dmlFindOneOrFail } from './dml-find-one-or-fail-test';
 import { dmlFindOne } from './dml-find-one-test';
 import { dmlFind } from './dml-find-test';
+import { dmlUpdateTest } from './dml-update-test';
 
 export const test = (options: TestOptions) => {
 	jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000;
@@ -26,5 +27,6 @@ export const test = (options: TestOptions) => {
 	dmlFindOne(options);
 	dmlFind(options);
 	dmlInsertTest(options);
+	dmlUpdateTest(options);
 	schemaQueryRepositoryTest(options);
 };
