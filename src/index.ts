@@ -11,6 +11,7 @@ import { ddlGrantTest } from './ddl-grant-test';
 import { schemaQueryRepositoryTest } from './schema-query-repository-test';
 import { dmlFindOneOrFail } from './dml-find-one-or-fail-test';
 import { dmlFindOne } from './dml-find-one-test';
+import { dmlFind } from './dml-find-test';
 
 export const test = (options: TestOptions) => {
 	jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000;
@@ -23,6 +24,7 @@ export const test = (options: TestOptions) => {
 	ddlTruncateTableTest(options);
 	dmlFindOneOrFail(options);
 	dmlFindOne(options);
+	dmlFind(options);
 	dmlInsertTest(options);
 	schemaQueryRepositoryTest(options);
 };
