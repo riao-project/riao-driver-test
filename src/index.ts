@@ -3,7 +3,7 @@ import { connectionTest } from './connection-test';
 import { ddlCreateTableTest } from './ddl-create-table-test';
 import { ddlDropTableTest } from './ddl-drop-table-test';
 import { ddlTruncateTableTest } from './ddl-truncate-table-test';
-import { dmlTest } from './dml-insert-test';
+import { dmlInsertTest } from './dml-insert-test';
 import { TestOptions } from './test-options';
 import { ddlAlterTableTest } from './ddl-alter-table-test';
 import { ddlCreateDatabaseTest } from './ddl-create-database-test';
@@ -19,6 +19,6 @@ export const test = (options: TestOptions) => {
 	ddlDropTableTest(options);
 	ddlGrantTest(options);
 	ddlTruncateTableTest(options);
-	dmlTest(options);
+	dmlInsertTest(options);
 	schemaQueryRepositoryTest(options);
 };

@@ -8,8 +8,8 @@ interface User {
 	fname: string;
 }
 
-export const dmlTest = (options: TestOptions) =>
-	describe(options.name + ' Query', () => {
+export const dmlInsertTest = (options: TestOptions) =>
+	describe(options.name + ' Insert', () => {
 		let db: Database;
 		let users: QueryRepository<User>;
 
