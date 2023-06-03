@@ -31,4 +31,15 @@ export const dmlFind = (options: TestOptions) =>
 			expect(results[0].fname).toEqual(undefined);
 			expect(results[0].email).toEqual('bob@myusers.com');
 		});
+
+		it('can find with limit', async () => {
+			const results = await users.find({
+				limit: 1,
+			});
+
+			expect(results.length).toEqual(1);
+			expect(+results[0].myid).toEqual(1);
+			expect(results[0].fname).toEqual('Bob');
+			expect(results[0].email).toEqual('bob@myusers.com');
+		});
 	});
