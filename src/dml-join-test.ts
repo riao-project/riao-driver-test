@@ -30,7 +30,12 @@ export const dmlJoin = (options: TestOptions) =>
 			const db = await getDatabase(options);
 
 			await db.ddl.dropTable({
-				tables: ['join_users_test', 'join_posts_test'],
+				tables: 'join_posts_test',
+				ifExists: true,
+			});
+
+			await db.ddl.dropTable({
+				tables: 'join_users_test',
 				ifExists: true,
 			});
 
