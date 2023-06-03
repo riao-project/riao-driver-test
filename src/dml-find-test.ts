@@ -89,9 +89,9 @@ export const dmlFind = (options: TestOptions) =>
 		it('can find where (nested)', async () => {
 			const results = await users.find({
 				where: [
-					{ fname: 'bob' },
+					{ fname: 'Bob' },
 					'or',
-					[{ fname: 'tom' }, 'and', { email: 'tom@myusers.com' }],
+					[{ fname: 'Tom' }, 'and', { email: 'tom@myusers.com' }],
 				],
 			});
 
