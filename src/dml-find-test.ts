@@ -42,4 +42,14 @@ export const dmlFind = (options: TestOptions) =>
 			expect(results[0].fname).toEqual('Bob');
 			expect(results[0].email).toEqual('bob@myusers.com');
 		});
+
+		it('can find with order by', async () => {
+			const results = await users.find({
+				orderBy: { fname: 'DESC' },
+			});
+
+			expect(+results[0].myid).toEqual(2);
+			expect(results[0].fname).toEqual('Tom');
+			expect(results[0].email).toEqual('tom@myusers.com');
+		});
 	});
