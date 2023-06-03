@@ -13,6 +13,7 @@ import { dmlFindOneOrFail } from './dml-find-one-or-fail-test';
 import { dmlFindOne } from './dml-find-one-test';
 import { dmlFind } from './dml-find-test';
 import { dmlUpdateTest } from './dml-update-test';
+import { dmlDeleteTest } from './dml-delete-test';
 
 export const test = (options: TestOptions) => {
 	jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000;
@@ -23,6 +24,7 @@ export const test = (options: TestOptions) => {
 	ddlDropTableTest(options);
 	ddlGrantTest(options);
 	ddlTruncateTableTest(options);
+	dmlDeleteTest(options);
 	dmlFindOneOrFail(options);
 	dmlFindOne(options);
 	dmlFind(options);
