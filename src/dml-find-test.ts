@@ -19,4 +19,16 @@ export const dmlFind = (options: TestOptions) =>
 			expect(results[0].fname).toEqual('Bob');
 			expect(results[0].email).toEqual('bob@myusers.com');
 		});
+
+		it('can find with select columns', async () => {
+			const results = await users.find({
+				columns: ['email'],
+				where: { myid: 1 },
+			});
+
+			expect(results.length).toBeGreaterThanOrEqual(1);
+			expect(results[0].myid).toEqual(undefined);
+			expect(results[0].fname).toEqual(undefined);
+			expect(results[0].email).toEqual('bob@myusers.com');
+		});
 	});
