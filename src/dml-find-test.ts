@@ -1,5 +1,16 @@
 import 'jasmine';
-import { QueryRepository } from 'riao-dbal/src';
+import {
+	columnName,
+	equals,
+	gt,
+	gte,
+	inArray,
+	like,
+	lt,
+	lte,
+	not,
+	QueryRepository,
+} from 'riao-dbal/src';
 import { TestOptions } from './test-options';
 import { createQueryTestData, User } from './dml-data';
 
@@ -87,5 +98,110 @@ export const dmlFind = (options: TestOptions) =>
 			expect(results.length).toBe(2);
 			expect(+results[0].myid).toEqual(1);
 			expect(+results[1].myid).toEqual(2);
+		});
+
+		it('can find where - equals', async () => {
+			const results = await users.find({
+				where: {
+					fname: equals('Bob'),
+				},
+			});
+
+			expect(results.length).toBe(1);
+			expect(+results[0].myid).toEqual(1);
+		});
+
+		it('can find where - like', async () => {
+			const results = await users.find({
+				where: {
+					email: like('tom@%'),
+				},
+			});
+
+			expect(results.length).toBe(1);
+			expect(+results[0].myid).toEqual(2);
+		});
+
+		it('can find where - less than', async () => {
+			const results = await users.find({
+				where: { myid: lt(2) },
+			});
+
+			expect(results.length).toBe(1);
+			expect(+results[0].myid).toEqual(1);
+		});
+
+		it('can find where - less than or equal to', async () => {
+			const results = await users.find({
+				where: { myid: lte(2) },
+			});
+
+			expect(results.length).toBe(2);
+			expect(+results[0].myid).toEqual(1);
+			expect(+results[1].myid).toEqual(2);
+		});
+
+		it('can find where - greater than', async () => {
+			const results = await users.find({
+				where: { myid: gt(1) },
+			});
+
+			expect(results.length).toBe(1);
+			expect(+results[0].myid).toEqual(2);
+		});
+
+		it('can find where - greater than or equal to', async () => {
+			const results = await users.find({
+				where: { myid: gte(1) },
+			});
+
+			expect(results.length).toBe(2);
+			expect(+results[0].myid).toEqual(1);
+			expect(+results[1].myid).toEqual(2);
+		});
+
+		it('can find where - in array', async () => {
+			const results = await users.find({
+				where: { fname: inArray(['Bob', 'Tom']) },
+			});
+
+			expect(results.length).toBe(2);
+			expect(+results[0].myid).toEqual(1);
+			expect(+results[1].myid).toEqual(2);
+		});
+
+		it('can find where - not', async () => {
+			const results = await users.find({
+				where: { fname: not('Tom') },
+			});
+
+			expect(results.length).toBe(1);
+			expect(+results[0].myid).toEqual(1);
+		});
+
+		it('can find where - not like', async () => {
+			const results = await users.find({
+				where: { email: not(like('tom@%')) },
+			});
+
+			expect(results.length).toBe(1);
+			expect(+results[0].myid).toEqual(1);
+		});
+
+		it('can find where - not in array', async () => {
+			const results = await users.find({
+				where: { fname: not(inArray(['Tom', 'Sally'])) },
+			});
+
+			expect(results.length).toBe(1);
+			expect(+results[0].myid).toEqual(1);
+		});
+
+		it('can find where - column', async () => {
+			const results = await users.find({
+				where: { fname: columnName('email') },
+			});
+
+			expect(results.length).toBe(0);
 		});
 	});
