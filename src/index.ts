@@ -9,12 +9,12 @@ import { ddlAlterTableTest } from './ddl-alter-table-test';
 import { ddlCreateDatabaseTest } from './ddl-create-database-test';
 import { ddlGrantTest } from './ddl-grant-test';
 import { schemaQueryRepositoryTest } from './schema-query-repository-test';
-import { dmlFindOneOrFail } from './dml-find-one-or-fail-test';
-import { dmlFindOne } from './dml-find-one-test';
-import { dmlFind } from './dml-find-test';
+import { dmlFindOneOrFailTest } from './dml-find-one-or-fail-test';
+import { dmlFindOneTest } from './dml-find-one-test';
+import { dmlFindTest } from './dml-find-test';
 import { dmlUpdateTest } from './dml-update-test';
 import { dmlDeleteTest } from './dml-delete-test';
-import { dmlJoin } from './dml-join-test';
+import { dmlJoinTest } from './dml-join-test';
 import { columnTypesTest } from './column-types-test';
 
 export const test = (options: TestOptions) => {
@@ -28,11 +28,11 @@ export const test = (options: TestOptions) => {
 	ddlGrantTest(options);
 	ddlTruncateTableTest(options);
 	dmlDeleteTest(options);
-	dmlFindOneOrFail(options);
-	dmlFindOne(options);
-	dmlFind(options);
+	dmlFindOneOrFailTest(options);
+	dmlFindOneTest(options);
+	dmlFindTest(options);
 	dmlInsertTest(options);
-	dmlJoin(options);
+	dmlJoinTest(options);
 	dmlUpdateTest(options);
 	schemaQueryRepositoryTest(options);
 };

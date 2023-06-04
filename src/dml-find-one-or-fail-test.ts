@@ -3,7 +3,7 @@ import { QueryRepository, like } from 'riao-dbal/src';
 import { TestOptions } from './test-options';
 import { createQueryTestData, User } from './dml-data';
 
-export const dmlFindOneOrFail = (options: TestOptions) =>
+export const dmlFindOneOrFailTest = (options: TestOptions) =>
 	describe(options.name + ' Query findOneOrFail()', () => {
 		let users: QueryRepository<User>;
 

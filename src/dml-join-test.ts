@@ -21,7 +21,7 @@ interface Post {
 
 type PostWithUser = User & Post;
 
-export const dmlJoin = (options: TestOptions) =>
+export const dmlJoinTest = (options: TestOptions) =>
 	describe(options.name + ' Join find()', () => {
 		let users: QueryRepository<User>;
 		let posts: QueryRepository<Post>;

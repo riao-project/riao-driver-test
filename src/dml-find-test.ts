@@ -14,7 +14,7 @@ import {
 import { TestOptions } from './test-options';
 import { createQueryTestData, User } from './dml-data';
 
-export const dmlFind = (options: TestOptions) =>
+export const dmlFindTest = (options: TestOptions) =>
 	describe(options.name + ' Query find()', () => {
 		let users: QueryRepository<User>;
 
