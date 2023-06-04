@@ -1,7 +1,7 @@
 import 'jasmine';
 import { ColumnType, Database, SchemaQueryRepository } from 'riao-dbal/src';
-import { TestOptions } from './test-options';
-import { getDatabase } from './init';
+import { TestOptions } from '../test-options';
+import { getDatabase } from '../init';
 
 export const schemaQueryRepositoryTest = (options: TestOptions) =>
 	describe(options.name + ' Schema Query Repository', () => {

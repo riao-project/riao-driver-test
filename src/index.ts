@@ -1,21 +1,21 @@
 import 'jasmine';
-import { connectionTest } from './connection-test';
-import { ddlCreateTableTest } from './ddl-create-table-test';
-import { ddlDropTableTest } from './ddl-drop-table-test';
-import { ddlTruncateTableTest } from './ddl-truncate-table-test';
-import { dmlInsertTest } from './dml-insert-test';
+import { connectionTest } from './tests/connection-test';
+import { ddlCreateTableTest } from './tests/ddl-create-table-test';
+import { ddlDropTableTest } from './tests/ddl-drop-table-test';
+import { ddlTruncateTableTest } from './tests/ddl-truncate-table-test';
+import { dmlInsertTest } from './tests/dml-insert-test';
 import { TestOptions } from './test-options';
-import { ddlAlterTableTest } from './ddl-alter-table-test';
-import { ddlCreateDatabaseTest } from './ddl-create-database-test';
-import { ddlGrantTest } from './ddl-grant-test';
-import { schemaQueryRepositoryTest } from './schema-query-repository-test';
-import { dmlFindOneOrFailTest } from './dml-find-one-or-fail-test';
-import { dmlFindOneTest } from './dml-find-one-test';
-import { dmlFindTest } from './dml-find-test';
-import { dmlUpdateTest } from './dml-update-test';
-import { dmlDeleteTest } from './dml-delete-test';
-import { dmlJoinTest } from './dml-join-test';
-import { columnTypesTest } from './column-types-test';
+import { ddlAlterTableTest } from './tests/ddl-alter-table-test';
+import { ddlCreateDatabaseTest } from './tests/ddl-create-database-test';
+import { ddlGrantTest } from './tests/ddl-grant-test';
+import { schemaQueryRepositoryTest } from './tests/schema-query-repository-test';
+import { dmlFindOneOrFailTest } from './tests/dml-find-one-or-fail-test';
+import { dmlFindOneTest } from './tests/dml-find-one-test';
+import { dmlFindTest } from './tests/dml-find-test';
+import { dmlUpdateTest } from './tests/dml-update-test';
+import { dmlDeleteTest } from './tests/dml-delete-test';
+import { dmlJoinTest } from './tests/dml-join-test';
+import { columnTypesTest } from './tests/column-types-test';
 
 export const test = (options: TestOptions) => {
 	jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000;

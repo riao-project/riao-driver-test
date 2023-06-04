@@ -1,15 +1,15 @@
 import 'jasmine';
 import { ColumnType, Database, QueryRepository } from 'riao-dbal/src';
-import { TestOptions } from './test-options';
-import { getDatabase } from './init';
+import { TestOptions } from '../test-options';
+import { getDatabase } from '../init';
 
 interface User {
 	myid: number;
 	fname: string;
 }
 
-export const dmlDeleteTest = (options: TestOptions) =>
-	describe(options.name + ' Delete', () => {
+export const dmlUpdateTest = (options: TestOptions) =>
+	describe(options.name + ' Update', () => {
 		let db: Database;
 		let users: QueryRepository<User>;
 
@@ -17,12 +17,12 @@ export const dmlDeleteTest = (options: TestOptions) =>
 			db = await getDatabase(options);
 
 			await db.ddl.dropTable({
-				tables: 'delete_test',
+				tables: 'update_test',
 				ifExists: true,
 			});
 
 			await db.ddl.createTable({
-				name: 'delete_test',
+				name: 'update_test',
 				columns: [
 					{
 						name: 'myid',
@@ -39,16 +39,20 @@ export const dmlDeleteTest = (options: TestOptions) =>
 			});
 
 			await db.buildSchema();
-			users = db.getQueryRepository<User>({ table: 'delete_test' });
+			users = db.getQueryRepository<User>({ table: 'update_test' });
 			await users.insert({
 				records: [{ fname: 'test' }],
 			});
 		});
 
-		it('can delete rows', async () => {
-			await users.delete({ where: { myid: 1 } });
-			const user = await users.findOne({ where: { myid: 1 } });
+		it('can update rows', async () => {
+			await users.update({
+				set: { fname: 'test-updated' },
+				where: { myid: 1 },
+			});
 
-			expect(user).toBeNull();
+			const user = await users.findOneOrFail({ where: { myid: 1 } });
+
+			expect(user.fname).toEqual('test-updated');
 		});
 	});

@@ -1,7 +1,7 @@
 import 'jasmine';
 import { ColumnOptions, ColumnType, Database, like } from 'riao-dbal/src';
-import { TestOptions } from './test-options';
-import { getDatabase } from './init';
+import { TestOptions } from '../test-options';
+import { getDatabase } from '../init';
 
 export const columnTypesTest = (options: TestOptions) =>
 	describe(options.name + ' Data Types', () => {

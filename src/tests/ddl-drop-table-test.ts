@@ -1,7 +1,7 @@
 import 'jasmine';
 import { ColumnType, Database } from 'riao-dbal/src';
-import { TestOptions } from './test-options';
-import { getDatabase } from './init';
+import { TestOptions } from '../test-options';
+import { getDatabase } from '../init';
 
 export const ddlDropTableTest = (options: TestOptions) =>
 	describe(options.name + ' Drop Table', () => {

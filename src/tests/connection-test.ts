@@ -1,7 +1,7 @@
 import 'jasmine';
-import { TestOptions } from './test-options';
+import { TestOptions } from '../test-options';
 import { Database } from 'riao-dbal/src';
-import { getDatabase } from './init';
+import { getDatabase } from '../init';
 
 export const connectionTest = (options: TestOptions) =>
 	describe(options.name + ' Connection', () => {

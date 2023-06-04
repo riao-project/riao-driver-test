@@ -1,7 +1,7 @@
 import 'jasmine';
 import { Database } from 'riao-dbal/src';
-import { TestOptions } from './test-options';
-import { getDatabase } from './init';
+import { TestOptions } from '../test-options';
+import { getDatabase } from '../init';
 
 export const ddlCreateDatabaseTest = (options: TestOptions) =>
 	describe(options.name + ' Create Database', () => {

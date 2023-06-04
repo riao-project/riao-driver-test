@@ -11,8 +11,8 @@ import {
 	not,
 	QueryRepository,
 } from 'riao-dbal/src';
-import { TestOptions } from './test-options';
-import { createQueryTestData, User } from './dml-data';
+import { TestOptions } from '../test-options';
+import { createQueryTestData, User } from '../dml-data';
 
 export const dmlFindTest = (options: TestOptions) =>
 	describe(options.name + ' Query find()', () => {

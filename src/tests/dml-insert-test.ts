@@ -1,7 +1,7 @@
 import 'jasmine';
 import { ColumnType, Database, QueryRepository } from 'riao-dbal/src';
-import { TestOptions } from './test-options';
-import { getDatabase } from './init';
+import { TestOptions } from '../test-options';
+import { getDatabase } from '../init';
 
 interface User {
 	myid: number;
