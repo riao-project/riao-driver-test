@@ -123,7 +123,7 @@ export const columnTypesTest = (options: TestOptions) =>
 
 		it('supports decimal column', async () => {
 			const table = 'decimal_column_test';
-			const max = 12345678901.99;
+			const max = 1234567890123.99;
 
 			await db.ddl.createTable({
 				name: table,
@@ -131,7 +131,7 @@ export const columnTypesTest = (options: TestOptions) =>
 					{
 						type: ColumnType.DECIMAL,
 						name: 'n_numbers',
-						significant: 11,
+						significant: 13,
 						decimal: 2,
 					},
 				],
