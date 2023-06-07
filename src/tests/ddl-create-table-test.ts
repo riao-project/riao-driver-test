@@ -16,6 +16,7 @@ export const ddlCreateTableTest = (options: TestOptions) =>
 					'create_pk_test',
 					'create_auto_increment_test',
 					'create_fk_test_child',
+					'create_uq_test',
 					'create_if_not_exists_test',
 				],
 				ifExists: true,
@@ -95,6 +96,24 @@ export const ddlCreateTableTest = (options: TestOptions) =>
 						columns: ['parent'],
 						referencesTable: 'create_fk_test_parent',
 						referencesColumns: ['id'],
+					},
+				],
+			});
+		});
+
+		it('can create a table w/ unique keys', async () => {
+			await db.ddl.createTable({
+				name: 'create_uq_test',
+				columns: [
+					{
+						name: 'id',
+						type: ColumnType.BIGINT,
+						isUnique: true,
+					},
+					{
+						name: 'parent',
+						type: ColumnType.BIGINT,
+						isUnique: true,
 					},
 				],
 			});
