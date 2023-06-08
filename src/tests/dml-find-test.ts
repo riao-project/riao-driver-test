@@ -66,6 +66,34 @@ export const dmlFindTest = (options: TestOptions) =>
 			expect(results[0].email).toEqual('bob@myusers.com');
 		});
 
+		it('can find with select with subquery', async () => {
+			const results = <DatabaseRecord[]>await users.find({
+				columns: [
+					{
+						query: {
+							table: 'query_test',
+							columns: ['myid'],
+							where: { myid: 1 },
+						},
+						as: 'first_id',
+					},
+					{
+						query: {
+							table: 'query_test',
+							columns: ['fname'],
+							where: { myid: 2 },
+						},
+						as: 'second_name',
+					},
+				],
+				where: { myid: 1 },
+			});
+
+			expect(results.length).toBeGreaterThanOrEqual(1);
+			expect(+results[0].first_id).toEqual(1);
+			expect(results[0].second_name).toEqual('Tom');
+		});
+
 		it('can find with limit', async () => {
 			const results = await users.find({
 				limit: 1,
