@@ -1,6 +1,7 @@
 import 'jasmine';
 import {
 	columnName,
+	DatabaseRecord,
 	equals,
 	gt,
 	gte,
@@ -40,6 +41,28 @@ export const dmlFindTest = (options: TestOptions) =>
 			expect(results.length).toBeGreaterThanOrEqual(1);
 			expect(results[0].myid).toEqual(undefined);
 			expect(results[0].fname).toEqual(undefined);
+			expect(results[0].email).toEqual('bob@myusers.com');
+		});
+
+		it('can find with select columns as', async () => {
+			const results = <DatabaseRecord[]>await users.find({
+				columns: [
+					{
+						column: 'myid',
+						as: 'user_id',
+					},
+					{
+						column: 'fname',
+						as: 'user_fname',
+					},
+					'email',
+				],
+				where: { myid: 1 },
+			});
+
+			expect(results.length).toBeGreaterThanOrEqual(1);
+			expect(+results[0].user_id).toEqual(1);
+			expect(results[0].user_fname).toEqual('Bob');
 			expect(results[0].email).toEqual('bob@myusers.com');
 		});
 
