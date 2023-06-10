@@ -16,10 +16,12 @@ import { dmlUpdateTest } from './tests/dml-update-test';
 import { dmlDeleteTest } from './tests/dml-delete-test';
 import { dmlJoinTest } from './tests/dml-join-test';
 import { columnTypesTest } from './tests/column-types-test';
+import { boolTest } from './tests/column-types';
 
 export const test = (options: TestOptions) => {
 	jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000;
 	connectionTest(options);
+	boolTest(options);
 	columnTypesTest(options);
 	ddlAlterTableTest(options);
 	ddlCreateDatabaseTest(options);
