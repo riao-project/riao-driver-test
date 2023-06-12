@@ -49,17 +49,16 @@ export const dmlInsertTest = (options: TestOptions) =>
 		});
 
 		it('can insert rows', async () => {
-			let results = await users.insert({
-				records: [
-					{
-						fname: 'Test',
-					},
-				],
+			const result = await users.insertOne({
+				records: {
+					fname: 'Test',
+				},
+				primaryKey: 'myid',
 			});
 
-			expect(+results[0].myid).toEqual(1);
+			expect(+result.myid).toEqual(1);
 
-			results = await users.insert({
+			const results = await users.insert({
 				records: [
 					{
 						fname: 'Bob',
