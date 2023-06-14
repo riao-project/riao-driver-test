@@ -11,12 +11,13 @@ async function createDatabase(options: TestOptions): Promise<void> {
 
 	db.name = 'testdb';
 
-	await db.setup({
-		...options.connectionOptions,
-		database: options.rootDatabase,
+	await db.init({
+		connectionOptions: {
+			...options.connectionOptions,
+			database: options.rootDatabase,
+		}
 	});
 
-	await db.init();
 	await db.ddl.dropDatabase({
 		name: options.connectionOptions.database,
 		ifExists: true,
@@ -36,10 +37,10 @@ async function initDatabase(
 
 	const db = new (options.db as { new (): Database })();
 
-	await db.setup(options.connectionOptions);
-
 	db.name = 'testdb';
-	await db.init();
+	await db.init({
+		connectionOptions: options.connectionOptions,
+	});
 
 	return db;
 }
