@@ -1,7 +1,5 @@
 import 'jasmine';
-import { ColumnType, QueryRepository } from 'riao-dbal/src';
-import { TestOptions } from './test-options';
-import { getDatabase } from './init';
+import { ColumnType, Database, QueryRepository } from 'riao-dbal/src';
 
 export interface User {
 	myid: number;
@@ -9,41 +7,9 @@ export interface User {
 	email: string;
 }
 
-interface DatabaseQueryTestData {
-	hasStartedData?: boolean;
-	hasCreatedData?: boolean;
-	userRepo?: QueryRepository<User>;
-}
-
-const databases: Record<string, DatabaseQueryTestData> = {};
-
 export async function createQueryTestData(
-	options: TestOptions
+	db: Database
 ): Promise<QueryRepository<User>> {
-	if (!(options.name in databases)) {
-		databases[options.name] = {};
-	}
-
-	if (databases[options.name].hasCreatedData) {
-		return databases[options.name].userRepo;
-	}
-	else if (databases[options.name].hasStartedData) {
-		do {
-			await new Promise((a, r) => setTimeout(a, 25));
-		} while (!databases[options.name].hasCreatedData);
-
-		return databases[options.name].userRepo;
-	}
-
-	databases[options.name].hasStartedData = true;
-
-	const db = await getDatabase(options);
-
-	await db.ddl.dropTable({
-		tables: 'query_test',
-		ifExists: true,
-	});
-
 	await db.ddl.createTable({
 		name: 'query_test',
 		columns: [
@@ -66,11 +32,11 @@ export async function createQueryTestData(
 		],
 	});
 
-	databases[options.name].userRepo = db.getQueryRepository<User>({
+	const userRepo = db.getQueryRepository<User>({
 		table: 'query_test',
 	});
 
-	await databases[options.name].userRepo.insert({
+	await userRepo.insert({
 		records: [
 			{
 				fname: 'Bob',
@@ -83,7 +49,5 @@ export async function createQueryTestData(
 		],
 	});
 
-	databases[options.name].hasCreatedData = true;
-
-	return databases[options.name].userRepo;
+	return userRepo;
 }

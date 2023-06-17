@@ -1,14 +1,13 @@
 import 'jasmine';
+import { TestDependencies } from '../dependency-injection';
 import { Database } from 'riao-dbal/src';
-import { TestOptions } from '../test-options';
-import { getDatabase } from '../init';
 
-export const ddlCreateDatabaseTest = (options: TestOptions) =>
-	describe(options.name + ' Create Database', () => {
+export const ddlCreateDatabaseTest = (di: TestDependencies) =>
+	describe('Create Database', () => {
 		let db: Database;
 
 		beforeAll(async () => {
-			db = await getDatabase(options);
+			db = di.db();
 
 			await db.ddl.dropDatabase({
 				name: 'create_db_test',

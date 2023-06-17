@@ -1,31 +1,13 @@
 import 'jasmine';
 import { ColumnType, CreateTableOptions, Database } from 'riao-dbal/src';
-import { TestOptions } from '../test-options';
-import { getDatabase } from '../init';
+import { TestDependencies } from '../dependency-injection';
 
-export const ddlCreateTableTest = (options: TestOptions) =>
-	describe(options.name + ' Create Table', () => {
+export const ddlCreateTableTest = (di: TestDependencies) =>
+	describe('Create Table', () => {
 		let db: Database;
 
-		beforeAll(async () => {
-			db = await getDatabase(options);
-
-			await db.ddl.dropTable({
-				tables: [
-					'create_test',
-					'create_pk_test',
-					'create_auto_increment_test',
-					'create_fk_test_child',
-					'create_uq_test',
-					'create_if_not_exists_test',
-				],
-				ifExists: true,
-			});
-
-			await db.ddl.dropTable({
-				tables: ['create_fk_test_parent'],
-				ifExists: true,
-			});
+		beforeAll(() => {
+			db = di.db();
 		});
 
 		it('can create a table', async () => {

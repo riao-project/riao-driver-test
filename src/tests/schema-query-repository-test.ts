@@ -1,21 +1,15 @@
 import 'jasmine';
 import { ColumnType, Database, SchemaQueryRepository } from 'riao-dbal/src';
-import { TestOptions } from '../test-options';
-import { getDatabase } from '../init';
+import { TestDependencies } from '../dependency-injection';
 
-export const schemaQueryRepositoryTest = (options: TestOptions) =>
-	describe(options.name + ' Schema Query Repository', () => {
+export const schemaQueryRepositoryTest = (di: TestDependencies) =>
+	describe('Schema Query Repository', () => {
 		let db: Database;
 		let repo: SchemaQueryRepository;
 
 		beforeAll(async () => {
-			db = await getDatabase(options);
+			db = di.db();
 			repo = db.getSchemaQueryRepository();
-
-			await db.ddl.dropTable({
-				tables: 'schema_query_test',
-				ifExists: true,
-			});
 
 			await db.ddl.createTable({
 				name: 'schema_query_test',

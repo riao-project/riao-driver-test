@@ -1,34 +1,13 @@
 import 'jasmine';
 import { ColumnOptions, ColumnType, Database, like } from 'riao-dbal/src';
-import { TestOptions } from '../test-options';
-import { getDatabase } from '../init';
+import { TestDependencies } from '../dependency-injection';
 
-export const columnTypesTest = (options: TestOptions) =>
-	describe(options.name + ' Data Types', () => {
+export const columnTypesTest = (di: TestDependencies) =>
+	describe('Data Types', () => {
 		let db: Database;
 
-		beforeAll(async () => {
-			db = await getDatabase(options);
-
-			await db.ddl.dropTable({
-				tables: [
-					'tinyint_column_test',
-					'smallint_column_test',
-					'int_column_test',
-					'bigint_column_test',
-					'decimal_column_test',
-					'float_column_test',
-					'double_column_test',
-					'date_column_test',
-					'time_column_test',
-					'datetime_column_test',
-					'char_column_test',
-					'varchar_column_test',
-					'text_column_test',
-					'blob_column_test',
-				],
-				ifExists: true,
-			});
+		beforeAll(() => {
+			db = di.db();
 		});
 
 		const integerTest = async (

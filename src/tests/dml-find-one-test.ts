@@ -1,14 +1,14 @@
 import 'jasmine';
 import { QueryRepository, like } from 'riao-dbal/src';
-import { TestOptions } from '../test-options';
-import { createQueryTestData, User } from '../dml-data';
+import { TestDependencies } from '../dependency-injection';
+import { User } from '../dml-data';
 
-export const dmlFindOneTest = (options: TestOptions) =>
-	describe(options.name + ' Query findOne()', () => {
+export const dmlFindOneTest = (di: TestDependencies) =>
+	describe('Query findOne()', () => {
 		let users: QueryRepository<User>;
 
 		beforeAll(async () => {
-			users = await createQueryTestData(options);
+			users = di.repo();
 		});
 
 		it('can find one', async () => {

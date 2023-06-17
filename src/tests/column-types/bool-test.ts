@@ -1,26 +1,14 @@
 import 'jasmine';
 import { ColumnType, Database } from 'riao-dbal/src';
-import { TestOptions } from '../../test-options';
-import { getDatabase } from '../../init';
+import { TestDependencies } from '../../dependency-injection';
 
-export const boolTest = (options: TestOptions) =>
-	describe(options.name + ' Data Types - Bool', () => {
+export const boolTest = (di: TestDependencies) =>
+	describe('Data Types - Bool', () => {
 		let db: Database;
 
-		beforeAll(async () => {
-			db = await getDatabase(options);
-
-			await db.ddl.dropTable({
-				tables: [
-					'bool_column_test',
-					'bool_true_column_test',
-					'bool_false_column_test',
-					'bool_null_column_test',
-				],
-				ifExists: true,
-			});
+		beforeAll(() => {
+			db = di.db();
 		});
-
 		it('supports bool column', async () => {
 			await db.ddl.createTable({
 				name: 'bool_column_test',

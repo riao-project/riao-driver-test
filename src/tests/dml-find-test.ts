@@ -12,15 +12,15 @@ import {
 	not,
 	QueryRepository,
 } from 'riao-dbal/src';
-import { TestOptions } from '../test-options';
-import { createQueryTestData, User } from '../dml-data';
+import { TestDependencies } from '../dependency-injection';
+import { User } from '../dml-data';
 
-export const dmlFindTest = (options: TestOptions) =>
-	describe(options.name + ' Query find()', () => {
+export const dmlFindTest = (di: TestDependencies) =>
+	describe('Query find()', () => {
 		let users: QueryRepository<User>;
 
-		beforeAll(async () => {
-			users = await createQueryTestData(options);
+		beforeAll(() => {
+			users = di.repo();
 		});
 
 		it('can find', async () => {

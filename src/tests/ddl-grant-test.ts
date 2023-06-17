@@ -1,11 +1,13 @@
 import 'jasmine';
 import { ColumnType, CreateTableOptions, Database } from 'riao-dbal/src';
+import { TestDependencies } from '../dependency-injection';
 import { TestOptions } from '../test-options';
 import { getDatabase } from '../init';
 
-export const ddlGrantTest = (options: TestOptions) =>
-	describe(options.name + ' Grant', () => {
+export const ddlGrantTest = (di: TestDependencies) =>
+	describe('Grant', () => {
 		let db: Database;
+		const options: TestOptions = di.options();
 
 		const name = options.name.toLowerCase();
 
@@ -15,7 +17,7 @@ export const ddlGrantTest = (options: TestOptions) =>
 		}
 
 		beforeAll(async () => {
-			db = await getDatabase(options);
+			db = di.db();
 
 			await db.ddl.dropUser({
 				names: [

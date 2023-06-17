@@ -2,11 +2,11 @@ import 'jasmine';
 import {
 	columnName,
 	ColumnType,
+	Database,
 	DatabaseRecord,
 	QueryRepository,
 } from 'riao-dbal/src';
-import { TestOptions } from '../test-options';
-import { getDatabase } from '../init';
+import { TestDependencies } from '../dependency-injection';
 
 interface User {
 	id: number;
@@ -21,23 +21,14 @@ interface Post {
 
 type PostWithUser = User & Post;
 
-export const dmlJoinTest = (options: TestOptions) =>
-	describe(options.name + ' Join find()', () => {
+export const dmlJoinTest = (di: TestDependencies) =>
+	describe('Join find()', () => {
+		let db: Database;
 		let users: QueryRepository<User>;
 		let posts: QueryRepository<Post>;
 
 		beforeAll(async () => {
-			const db = await getDatabase(options);
-
-			await db.ddl.dropTable({
-				tables: 'join_posts_test',
-				ifExists: true,
-			});
-
-			await db.ddl.dropTable({
-				tables: 'join_users_test',
-				ifExists: true,
-			});
+			db = di.db();
 
 			await db.ddl.createTable({
 				name: 'join_users_test',

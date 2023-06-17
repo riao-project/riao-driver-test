@@ -6,7 +6,7 @@ import { Database } from 'riao-dbal/src';
  *
  * @param options Test options
  */
-async function createDatabase(options: TestOptions): Promise<void> {
+async function recreateDatabase(options: TestOptions): Promise<void> {
 	const db = new (options.db as { new (): Database })();
 
 	db.name = 'testdb';
@@ -15,7 +15,7 @@ async function createDatabase(options: TestOptions): Promise<void> {
 		connectionOptions: {
 			...options.connectionOptions,
 			database: options.rootDatabase,
-		}
+		},
 	});
 
 	await db.ddl.dropDatabase({
@@ -27,12 +27,11 @@ async function createDatabase(options: TestOptions): Promise<void> {
 	await db.disconnect();
 }
 
-async function initDatabase(
-	options: TestOptions,
-	recreate = true
-): Promise<Database> {
+export async function getDatabase(options: TestOptions, recreate = false) {
+	const name = options.name + '-' + options.connectionOptions.database;
+
 	if (recreate) {
-		await createDatabase(options);
+		await recreateDatabase(options);
 	}
 
 	const db = new (options.db as { new (): Database })();
@@ -43,16 +42,4 @@ async function initDatabase(
 	});
 
 	return db;
-}
-
-const databases: { [key: string]: Database } = {};
-
-export async function getDatabase(options: TestOptions, recreate = true) {
-	const name = options.name + '-' + options.connectionOptions.database;
-
-	if (!databases[name]) {
-		databases[name] = await initDatabase(options, recreate);
-	}
-
-	return databases[name];
 }

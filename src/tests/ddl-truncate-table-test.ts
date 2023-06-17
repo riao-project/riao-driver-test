@@ -1,14 +1,13 @@
 import 'jasmine';
 import { ColumnType, CreateTableOptions, Database } from 'riao-dbal/src';
-import { TestOptions } from '../test-options';
-import { getDatabase } from '../init';
+import { TestDependencies } from '../dependency-injection';
 
-export const ddlTruncateTableTest = (options: TestOptions) =>
-	describe(options.name + ' Truncate', () => {
+export const ddlTruncateTableTest = (di: TestDependencies) =>
+	describe('Truncate', () => {
 		let db: Database;
 
-		beforeAll(async () => {
-			db = await getDatabase(options);
+		beforeAll(() => {
+			db = di.db();
 		});
 
 		it('can truncate a table', async () => {

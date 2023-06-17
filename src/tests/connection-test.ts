@@ -1,14 +1,16 @@
 import 'jasmine';
-import { TestOptions } from '../test-options';
 import { Database } from 'riao-dbal/src';
-import { getDatabase } from '../init';
+import { TestDependencies } from '../dependency-injection';
+import { TestOptions } from '../test-options';
 
-export const connectionTest = (options: TestOptions) =>
-	describe(options.name + ' Connection', () => {
+export const connectionTest = (di: TestDependencies) =>
+	describe('Connection', () => {
 		let db: Database;
+		let options: TestOptions;
 
-		beforeAll(async () => {
-			db = await getDatabase(options);
+		beforeAll(() => {
+			db = di.db();
+			options = di.options();
 		});
 
 		it('can connect', async () => {

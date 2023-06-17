@@ -1,25 +1,19 @@
 import 'jasmine';
 import { ColumnType, Database, QueryRepository } from 'riao-dbal/src';
-import { TestOptions } from '../test-options';
-import { getDatabase } from '../init';
+import { TestDependencies } from '../dependency-injection';
 
 interface User {
 	myid: number;
 	fname: string;
 }
 
-export const dmlUpdateTest = (options: TestOptions) =>
-	describe(options.name + ' Update', () => {
+export const dmlUpdateTest = (di: TestDependencies) =>
+	describe('Update', () => {
 		let db: Database;
 		let users: QueryRepository<User>;
 
 		beforeAll(async () => {
-			db = await getDatabase(options);
-
-			await db.ddl.dropTable({
-				tables: 'update_test',
-				ifExists: true,
-			});
+			db = di.db();
 
 			await db.ddl.createTable({
 				name: 'update_test',

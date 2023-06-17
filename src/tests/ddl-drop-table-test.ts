@@ -1,14 +1,13 @@
 import 'jasmine';
 import { ColumnType, Database } from 'riao-dbal/src';
-import { TestOptions } from '../test-options';
-import { getDatabase } from '../init';
+import { TestDependencies } from '../dependency-injection';
 
-export const ddlDropTableTest = (options: TestOptions) =>
-	describe(options.name + ' Drop Table', () => {
+export const ddlDropTableTest = (di: TestDependencies) =>
+	describe('Drop Table', () => {
 		let db: Database;
 
-		beforeAll(async () => {
-			db = await getDatabase(options);
+		beforeAll(() => {
+			db = di.db();
 		});
 
 		it('can drop a table', async () => {

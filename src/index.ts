@@ -22,22 +22,42 @@ import { dmlJoinTest } from './tests/dml-join-test';
 import { columnTypesTest } from './tests/column-types-test';
 import { boolTest } from './tests/column-types';
 
-export const test = (options: TestOptions) => {
-	jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000;
-	connectionTest(options);
-	boolTest(options);
-	columnTypesTest(options);
-	ddlAlterTableTest(options);
-	ddlCreateDatabaseTest(options);
-	ddlCreateTableTest(options);
-	ddlDropTableTest(options);
-	ddlTruncateTableTest(options);
-	dmlDeleteTest(options);
-	dmlFindOneOrFailTest(options);
-	dmlFindOneTest(options);
-	dmlFindTest(options);
-	dmlInsertTest(options);
-	dmlJoinTest(options);
-	dmlUpdateTest(options);
-	schemaQueryRepositoryTest(options);
-};
+export const test = (options: TestOptions) =>
+	describe(options.db.name, () => {
+		jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000;
+
+		let db: Database;
+		let repo: QueryRepository<User>;
+
+		const injector: TestDependencies = {
+			db: () => db,
+			repo: () => repo,
+			options: () => options,
+		};
+
+		beforeAll(async () => {
+			db = await getDatabase(options, true);
+			repo = await createQueryTestData(db);
+		});
+
+		afterAll(async () => {
+			await db.disconnect();
+		});
+
+		connectionTest(injector);
+		boolTest(injector);
+		columnTypesTest(injector);
+		ddlAlterTableTest(injector);
+		ddlCreateDatabaseTest(injector);
+		ddlCreateTableTest(injector);
+		ddlDropTableTest(injector);
+		ddlTruncateTableTest(injector);
+		dmlDeleteTest(injector);
+		dmlFindOneOrFailTest(injector);
+		dmlFindOneTest(injector);
+		dmlFindTest(injector);
+		dmlInsertTest(injector);
+		dmlJoinTest(injector);
+		dmlUpdateTest(injector);
+		schemaQueryRepositoryTest(injector);
+	});

@@ -1,28 +1,13 @@
 import 'jasmine';
 import { ColumnType, Database } from 'riao-dbal/src';
-import { TestOptions } from '../test-options';
-import { getDatabase } from '../init';
+import { TestDependencies } from '../dependency-injection';
 
-export const ddlAlterTableTest = (options: TestOptions) =>
-	describe(options.name + ' Alter Table', () => {
+export const ddlAlterTableTest = (di: TestDependencies) =>
+	describe('Alter Table', () => {
 		let db: Database;
 
-		beforeAll(async () => {
-			db = await getDatabase(options);
-
-			await db.ddl.dropTable({
-				tables: [
-					'add_columns_test',
-					'alter_fk_test_child',
-					'change_columns_test',
-				],
-				ifExists: true,
-			});
-
-			await db.ddl.dropTable({
-				tables: ['alter_fk_test_parent'],
-				ifExists: true,
-			});
+		beforeAll(() => {
+			db = di.db();
 		});
 
 		it('can add columns', async () => {
