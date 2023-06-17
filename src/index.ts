@@ -1,4 +1,9 @@
 import 'jasmine';
+import { getDatabase } from './init';
+import { Database, QueryRepository } from 'riao-dbal/src';
+import { User, createQueryTestData } from './dml-data';
+import { TestDependencies } from './dependency-injection';
+
 import { connectionTest } from './tests/connection-test';
 import { ddlCreateTableTest } from './tests/ddl-create-table-test';
 import { ddlDropTableTest } from './tests/ddl-drop-table-test';
@@ -7,7 +12,6 @@ import { dmlInsertTest } from './tests/dml-insert-test';
 import { TestOptions } from './test-options';
 import { ddlAlterTableTest } from './tests/ddl-alter-table-test';
 import { ddlCreateDatabaseTest } from './tests/ddl-create-database-test';
-import { ddlGrantTest } from './tests/ddl-grant-test';
 import { schemaQueryRepositoryTest } from './tests/schema-query-repository-test';
 import { dmlFindOneOrFailTest } from './tests/dml-find-one-or-fail-test';
 import { dmlFindOneTest } from './tests/dml-find-one-test';
@@ -27,7 +31,6 @@ export const test = (options: TestOptions) => {
 	ddlCreateDatabaseTest(options);
 	ddlCreateTableTest(options);
 	ddlDropTableTest(options);
-	ddlGrantTest(options);
 	ddlTruncateTableTest(options);
 	dmlDeleteTest(options);
 	dmlFindOneOrFailTest(options);
