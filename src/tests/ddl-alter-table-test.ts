@@ -61,11 +61,9 @@ export const ddlAlterTableTest = (di: TestDependencies) =>
 
 			await db.ddl.addForeignKey({
 				table: 'alter_fk_test_child',
-				fk: {
-					columns: ['parent'],
-					referencesTable: 'alter_fk_test_parent',
-					referencesColumns: ['id'],
-				},
+				columns: ['parent'],
+				referencesTable: 'alter_fk_test_parent',
+				referencesColumns: ['id'],
 			});
 		});
 
