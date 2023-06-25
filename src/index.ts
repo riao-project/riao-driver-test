@@ -19,8 +19,7 @@ import { dmlFindTest } from './tests/dml-find-test';
 import { dmlUpdateTest } from './tests/dml-update-test';
 import { dmlDeleteTest } from './tests/dml-delete-test';
 import { dmlJoinTest } from './tests/dml-join-test';
-import { columnTypesTest } from './tests/column-types-test';
-import { boolTest } from './tests/column-types';
+import { columnTypesTest } from './tests/column-types';
 
 export const test = (options: TestOptions) =>
 	describe(options.db.name, () => {
@@ -45,7 +44,6 @@ export const test = (options: TestOptions) =>
 		});
 
 		connectionTest(injector);
-		boolTest(injector);
 		columnTypesTest(injector);
 		ddlAlterTableTest(injector);
 		ddlCreateDatabaseTest(injector);
