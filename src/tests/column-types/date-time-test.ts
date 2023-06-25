@@ -1,6 +1,7 @@
 import 'jasmine';
 import { ColumnType, Database } from 'riao-dbal/src';
 import { TestDependencies } from '../../dependency-injection';
+import { expectDate } from '../../expectations';
 
 export const dateTimeTest = (di: TestDependencies) =>
 	describe('Data Types - Date & Time', () => {
@@ -112,5 +113,77 @@ export const dateTimeTest = (di: TestDependencies) =>
 
 			expect(records.length).toEqual(1);
 			expect(records[0].expiration).toEqual(max);
+		});
+
+		it('can store dates past 2038', async () => {
+			await db.ddl.createTable({
+				name: 'timestamp_2038',
+				columns: [
+					{
+						name: 'id',
+						type: ColumnType.SMALLINT,
+						primaryKey: true,
+						autoIncrement: true,
+					},
+					{
+						name: 'timestamp',
+						type: ColumnType.DATETIME,
+					},
+				],
+			});
+
+			const date = new Date('2048-02-02 05:25:30Z');
+
+			await db.query.insert({
+				table: 'timestamp_2038',
+				records: [{ timestamp: date }],
+			});
+
+			const results = await db.query.find({
+				table: 'timestamp_2038',
+			});
+
+			expect(results.length).toEqual(1);
+			expectDate({
+				result: results[0].timestamp,
+				expected: date,
+				toleranceSeconds: 0,
+			});
+		});
+
+		it('can store & retrieve in the right timezone', async () => {
+			await db.ddl.createTable({
+				name: 'timestamp_timezone',
+				columns: [
+					{
+						name: 'id',
+						type: ColumnType.SMALLINT,
+						primaryKey: true,
+						autoIncrement: true,
+					},
+					{
+						name: 'timestamp',
+						type: ColumnType.DATETIME,
+					},
+				],
+			});
+
+			const date = new Date('2028-02-02 05:25:30 EST');
+
+			await db.query.insert({
+				table: 'timestamp_timezone',
+				records: [{ timestamp: date }],
+			});
+
+			const results = await db.query.find({
+				table: 'timestamp_timezone',
+			});
+
+			expect(results.length).toEqual(1);
+			expectDate({
+				result: results[0].timestamp,
+				expected: date,
+				toleranceSeconds: 0,
+			});
 		});
 	});
