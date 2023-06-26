@@ -20,6 +20,7 @@ import { dmlUpdateTest } from './tests/dml-update-test';
 import { dmlDeleteTest } from './tests/dml-delete-test';
 import { dmlJoinTest } from './tests/dml-join-test';
 import { columnTypesTest } from './tests/column-types';
+import { functionsTest } from './tests/functions';
 
 export const test = (options: TestOptions) =>
 	describe(options.db.name, () => {
@@ -58,4 +59,6 @@ export const test = (options: TestOptions) =>
 		dmlJoinTest(injector);
 		dmlUpdateTest(injector);
 		schemaQueryRepositoryTest(injector);
+
+		functionsTest(injector);
 	});
