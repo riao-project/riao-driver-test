@@ -76,6 +76,36 @@ export const boolTest = (di: TestDependencies) =>
 			expect(records[0].is_a_bool).toBeTruthy();
 		});
 
+		it('supports default false', async () => {
+			await db.ddl.createTable({
+				name: 'bool_false_column_test',
+				columns: [
+					{
+						type: ColumnType.INT,
+						name: 'id',
+						primaryKey: true,
+					},
+					{
+						type: ColumnType.BOOL,
+						name: 'is_a_bool',
+						default: false,
+					},
+				],
+			});
+
+			await db.query.insert({
+				table: 'bool_false_column_test',
+				records: [{ id: 1 }],
+			});
+
+			const records = await db.query.find({
+				table: 'bool_false_column_test',
+			});
+
+			expect(records.length).toEqual(1);
+			expect(records[0].is_a_bool).toBeFalsy();
+		});
+
 		it('supports default null', async () => {
 			await db.ddl.createTable({
 				name: 'bool_null_column_test',
