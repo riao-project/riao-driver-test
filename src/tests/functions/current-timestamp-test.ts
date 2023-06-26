@@ -40,7 +40,7 @@ export const currentTimestampTest = (di: TestDependencies) =>
 					},
 					{
 						name: 'timestamp',
-						type: ColumnType.DATETIME,
+						type: ColumnType.TIMESTAMP,
 						default: db.functions.currentTimestamp(),
 					},
 				],
@@ -76,7 +76,7 @@ export const currentTimestampTest = (di: TestDependencies) =>
 					},
 					{
 						name: 'timestamp',
-						type: ColumnType.DATETIME,
+						type: ColumnType.TIMESTAMP,
 					},
 				],
 			});
@@ -118,7 +118,7 @@ export const currentTimestampTest = (di: TestDependencies) =>
 					},
 					{
 						name: 'timestamp',
-						type: ColumnType.DATETIME,
+						type: ColumnType.TIMESTAMP,
 					},
 				],
 			});

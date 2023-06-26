@@ -85,15 +85,15 @@ export const dateTimeTest = (di: TestDependencies) =>
 			expect(returned).toEqual(max);
 		});
 
-		it('supports datetime column', async () => {
-			const table = 'datetime_column_test';
+		it('supports timestamp column', async () => {
+			const table = 'timestamp_column_test';
 			const max = new Date('2999-12-30T12:12:59.0000Z');
 
 			await db.ddl.createTable({
 				name: table,
 				columns: [
 					{
-						type: ColumnType.DATETIME,
+						type: ColumnType.TIMESTAMP,
 						name: 'expiration',
 					},
 				],
@@ -127,7 +127,7 @@ export const dateTimeTest = (di: TestDependencies) =>
 					},
 					{
 						name: 'timestamp',
-						type: ColumnType.DATETIME,
+						type: ColumnType.TIMESTAMP,
 					},
 				],
 			});
@@ -163,7 +163,7 @@ export const dateTimeTest = (di: TestDependencies) =>
 					},
 					{
 						name: 'timestamp',
-						type: ColumnType.DATETIME,
+						type: ColumnType.TIMESTAMP,
 					},
 				],
 			});
