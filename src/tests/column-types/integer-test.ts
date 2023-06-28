@@ -87,11 +87,25 @@ export const integerTest = (di: TestDependencies) =>
 
 			if (columnType === ColumnType.BIGINT) {
 				const converter = (val) => (val ? BigInt(val) : val);
+				const toNumber = (val) => {
+					const isBigInt = typeof val === 'bigint';
+					const asStringOrNum = isBigInt ? val.toString() : val;
+
+					const parsed = Number.parseInt(asStringOrNum, 10);
+
+					return parsed;
+				};
+
+				zeroRecords[0].n_numbers = toNumber(zeroRecords[0].n_numbers);
 
 				for (const rec of [zeroRecords, maxRecords, minRecords]) {
 					rec[0].n_numbers = converter(rec[0].n_numbers);
 					rec[0].n_default_min = BigInt(rec[0].n_default_min);
 					rec[0].n_default_max = BigInt(rec[0].n_default_max);
+					rec[0].n_default_zero = toNumber(rec[0].n_default_zero);
+					rec[0].n_default_auto_increment = toNumber(
+						rec[0].n_default_auto_increment
+					);
 				}
 			}
 
