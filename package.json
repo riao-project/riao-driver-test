@@ -1,5 +1,5 @@
 {
-	"name": "riao-driver-test",
+	"name": "@riao/driver-test",
 	"version": "1.0.0",
 	"description": "riao-driver-test",
 	"private": "true",
@@ -33,7 +33,6 @@
 		"prettier": "^2.8.0",
 		"prettier-eslint": "^15.0.1",
 		"prettier-eslint-cli": "^7.1.0",
-		"riao-dbal": "file:../riao-dbal",
 		"ts-node": "^10.9.1",
 		"ts-packager": "^1.1.0",
 		"ts-script": "^1.0.0",
@@ -43,13 +42,16 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/riao-driver-test/riao-driver-test.git"
+		"url": "git+https://github.com/riao-project/riao-driver-test.git"
 	},
-	"author": "riao-driver-test",
+	"author": "riao",
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/riao-driver-test/riao-driver-test/issues"
+		"url": "https://github.com/riao-project/riao-driver-test/issues"
 	},
-	"homepage": "https://github.com/riao-driver-test/riao-driver-test#readme",
-	"keywords": []
+	"homepage": "https://github.com/riao-project/riao-driver-test#readme",
+	"keywords": [],
+	"dependencies": {
+		"@riao/dbal": "^1.0.1"
+	}
 }

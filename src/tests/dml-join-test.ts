@@ -5,7 +5,7 @@ import {
 	Database,
 	DatabaseRecord,
 	QueryRepository,
-} from 'riao-dbal/src';
+} from '@riao/dbal';
 import { TestDependencies } from '../dependency-injection';
 
 interface User {

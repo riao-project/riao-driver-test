@@ -1,4 +1,4 @@
-import { Database, QueryRepository } from 'riao-dbal/src';
+import { Database, QueryRepository } from '@riao/dbal';
 import { TestOptions } from './test-options';
 import { User } from './dml-data';
 

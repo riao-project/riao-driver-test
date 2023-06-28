@@ -1,5 +1,5 @@
 import 'jasmine';
-import { ColumnType, Database, QueryRepository } from 'riao-dbal/src';
+import { ColumnType, Database, QueryRepository } from '@riao/dbal';
 
 export interface User {
 	myid: number;

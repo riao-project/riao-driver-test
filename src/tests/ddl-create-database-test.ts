@@ -1,6 +1,6 @@
 import 'jasmine';
 import { TestDependencies } from '../dependency-injection';
-import { Database } from 'riao-dbal/src';
+import { Database } from '@riao/dbal';
 
 export const ddlCreateDatabaseTest = (di: TestDependencies) =>
 	describe('Create Database', () => {

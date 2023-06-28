@@ -11,7 +11,7 @@ import {
 	lte,
 	not,
 	QueryRepository,
-} from 'riao-dbal/src';
+} from '@riao/dbal';
 import { TestDependencies } from '../dependency-injection';
 import { User } from '../dml-data';
 

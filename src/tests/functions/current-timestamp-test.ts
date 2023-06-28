@@ -1,5 +1,5 @@
 import 'jasmine';
-import { ColumnType, Database, gt } from 'riao-dbal/src';
+import { ColumnType, Database, gt } from '@riao/dbal';
 import { expectDate } from '../../expectations';
 import { TestDependencies } from '../../dependency-injection';
 

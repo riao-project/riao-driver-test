@@ -1,5 +1,5 @@
 import 'jasmine';
-import { QueryRepository, like } from 'riao-dbal/src';
+import { QueryRepository, like } from '@riao/dbal';
 import { TestDependencies } from '../dependency-injection';
 import { User } from '../dml-data';
 

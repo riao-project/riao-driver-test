@@ -1,5 +1,5 @@
 import 'jasmine';
-import { ColumnType, CreateTableOptions, Database } from 'riao-dbal/src';
+import { ColumnType, CreateTableOptions, Database } from '@riao/dbal';
 import { TestDependencies } from '../dependency-injection';
 
 export const ddlCreateTableTest = (di: TestDependencies) =>

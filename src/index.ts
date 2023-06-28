@@ -1,6 +1,6 @@
 import 'jasmine';
 import { getDatabase } from './init';
-import { Database, QueryRepository } from 'riao-dbal/src';
+import { Database, QueryRepository } from '@riao/dbal';
 import { User, createQueryTestData } from './dml-data';
 import { TestDependencies } from './dependency-injection';
 

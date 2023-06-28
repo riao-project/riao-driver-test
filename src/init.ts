@@ -1,5 +1,5 @@
 import { TestOptions } from './test-options';
-import { Database } from 'riao-dbal/src';
+import { Database } from '@riao/dbal';
 
 /**
  * Setup the db server with a database for testing

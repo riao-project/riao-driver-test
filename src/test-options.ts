@@ -1,4 +1,4 @@
-import { DatabaseConnectionOptions, Database } from 'riao-dbal/src';
+import { DatabaseConnectionOptions, Database } from '@riao/dbal';
 
 export interface TestOptions {
 	name: string;

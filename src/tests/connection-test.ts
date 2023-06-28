@@ -1,5 +1,5 @@
 import 'jasmine';
-import { Database } from 'riao-dbal/src';
+import { Database } from '@riao/dbal';
 import { TestDependencies } from '../dependency-injection';
 import { TestOptions } from '../test-options';
 

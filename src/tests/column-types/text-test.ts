@@ -1,5 +1,5 @@
 import 'jasmine';
-import { ColumnOptions, ColumnType, Database, like } from 'riao-dbal/src';
+import { ColumnOptions, ColumnType, Database, like } from '@riao/dbal';
 import { TestDependencies } from '../../dependency-injection';
 
 export const textTest = (di: TestDependencies) =>

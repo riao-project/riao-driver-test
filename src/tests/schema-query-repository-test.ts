@@ -1,5 +1,5 @@
 import 'jasmine';
-import { ColumnType, Database, SchemaQueryRepository } from 'riao-dbal/src';
+import { ColumnType, Database, SchemaQueryRepository } from '@riao/dbal';
 import { TestDependencies } from '../dependency-injection';
 
 export const schemaQueryRepositoryTest = (di: TestDependencies) =>
