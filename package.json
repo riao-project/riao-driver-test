@@ -52,6 +52,6 @@
 	"homepage": "https://github.com/riao-project/riao-driver-test#readme",
 	"keywords": [],
 	"dependencies": {
-		"@riao/dbal": "^1.0.1"
+		"@riao/dbal": "^1.1.0"
 	}
 }
