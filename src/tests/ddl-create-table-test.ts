@@ -22,6 +22,30 @@ export const ddlCreateTableTest = (di: TestDependencies) =>
 			});
 		});
 
+		it('can create a table with reserved words', async () => {
+			await db.ddl.createTable({
+				name: 'group',
+				columns: [
+					{
+						name: 'id',
+						type: ColumnType.BIGINT,
+					},
+				],
+			});
+		});
+
+		it('can create a table column with reserved words', async () => {
+			await db.ddl.createTable({
+				name: 'reserved_column_test',
+				columns: [
+					{
+						name: 'key',
+						type: ColumnType.BIGINT,
+					},
+				],
+			});
+		});
+
 		it('can create a primary key', async () => {
 			await db.ddl.createTable({
 				name: 'create_pk_test',
