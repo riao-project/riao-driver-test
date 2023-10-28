@@ -111,10 +111,10 @@ export const dmlJoinTest = (di: TestDependencies) =>
 
 		it('can left join', async () => {
 			const results = <PostWithUser[]>await posts.find({
-				columns: <any>[
-					'join_posts_test.id as id',
-					'join_posts_test.title as title',
-					'join_users_test.fname as fname',
+				columns: [
+					{ column: 'join_posts_test.id', as: 'id' },
+					{ column: 'join_posts_test.title', as: 'title' },
+					{ column: 'join_users_test.fname', as: 'fname' },
 				],
 				join: [
 					{
