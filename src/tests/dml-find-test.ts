@@ -32,6 +32,19 @@ export const dmlFindTest = (di: TestDependencies) =>
 			expect(results[0].email).toEqual('bob@myusers.com');
 		});
 
+		it('can find with table alias', async () => {
+			const results = await di.db().query.find({
+				table: 'query_test',
+				tableAlias: 'u',
+				where: { 'u.myid': 1 },
+			});
+
+			expect(results.length).toEqual(1);
+			expect(+results[0].myid).toEqual(1);
+			expect(results[0].fname).toEqual('Bob');
+			expect(results[0].email).toEqual('bob@myusers.com');
+		});
+
 		it('can find with select columns', async () => {
 			const results = await users.find({
 				columns: ['email'],
