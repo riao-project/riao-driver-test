@@ -52,15 +52,12 @@ export const transactionTest = (di: TestDependencies) =>
 		});
 
 		it('can insert rows', async () => {
-			try {
-				await db.transaction(async (transaction: Transaction) => {
-					await transaction.query.insert({
-						table: 'transaction_test',
-						records: [{ name: 'Inserted' }],
-					});
+			await db.transaction(async (transaction: Transaction) => {
+				await transaction.query.insert({
+					table: 'transaction_test',
+					records: [{ name: 'Inserted' }],
 				});
-			}
-			catch (e) {}
+			});
 
 			const rows = await db.query.find({
 				table: 'transaction_test',
