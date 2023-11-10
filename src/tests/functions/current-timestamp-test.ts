@@ -1,5 +1,5 @@
 import 'jasmine';
-import { ColumnType, Database, gt } from '@riao/dbal';
+import { ColumnType, Database, DatabaseFunctions, gt } from '@riao/dbal';
 import { expectDate } from '../../expectations';
 import { TestDependencies } from '../../dependency-injection';
 
@@ -16,14 +16,27 @@ export const currentTimestampTest = (di: TestDependencies) =>
 			const results = await db.query.find({
 				columns: [
 					{
-						query: db.functions.currentTimestamp(),
+						query: DatabaseFunctions.currentTimestamp(),
 						as: 'timestamp',
 					},
 				],
 			});
 
+			expect(results.length).toEqual(1);
+			let val = results[0].timestamp;
+
+			if (di.options().name.includes('Sqlite')) {
+				console.warn(
+					'Selecting timestamp queries will not be returned as a Date instance in sqlite.'
+				);
+				console.warn(
+					'Selecting timestamp does not return timezone in sqlite.'
+				);
+				val = new Date(val + 'Z');
+			}
+
 			expectDate({
-				result: results[0].timestamp,
+				result: val,
 				expected: date,
 				toleranceSeconds: 5,
 			});
@@ -41,10 +54,12 @@ export const currentTimestampTest = (di: TestDependencies) =>
 					{
 						name: 'timestamp',
 						type: ColumnType.TIMESTAMP,
-						default: db.functions.currentTimestamp(),
+						default: DatabaseFunctions.currentTimestamp(),
 					},
 				],
 			});
+
+			await db.buildSchema();
 
 			const date = new Date();
 
@@ -81,6 +96,8 @@ export const currentTimestampTest = (di: TestDependencies) =>
 				],
 			});
 
+			await db.buildSchema();
+
 			const date = new Date('2028-02-02 05:25:30Z');
 
 			await db.query.insert({
@@ -94,7 +111,7 @@ export const currentTimestampTest = (di: TestDependencies) =>
 			const results = await db.query.find({
 				table: 'where_current_timestamp',
 				where: {
-					timestamp: gt(db.functions.currentTimestamp()),
+					timestamp: gt(DatabaseFunctions.currentTimestamp()),
 				},
 			});
 
@@ -123,9 +140,11 @@ export const currentTimestampTest = (di: TestDependencies) =>
 				],
 			});
 
+			await db.buildSchema();
+
 			await db.query.insert({
 				table: 'insert_current_timestamp',
-				records: [{ timestamp: db.functions.currentTimestamp() }],
+				records: [{ timestamp: DatabaseFunctions.currentTimestamp() }],
 			});
 
 			const date = new Date();

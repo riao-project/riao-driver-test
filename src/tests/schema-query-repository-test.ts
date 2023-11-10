@@ -38,6 +38,10 @@ export const schemaQueryRepositoryTest = (di: TestDependencies) =>
 				}
 			}
 
+			const bigintKeyword = db
+				.getDataDefinitionBuilder()
+				.getColumnTypes().BIGINT;
+
 			expect(schema as any).toEqual({
 				tables: {
 					schema_query_test: {
@@ -46,7 +50,7 @@ export const schemaQueryRepositoryTest = (di: TestDependencies) =>
 						columns: {
 							id: {
 								name: 'id',
-								type: ColumnType.BIGINT,
+								type: bigintKeyword,
 								primaryKey: true,
 							},
 							fname: {

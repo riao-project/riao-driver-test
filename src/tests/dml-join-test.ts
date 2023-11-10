@@ -66,13 +66,13 @@ export const dmlJoinTest = (di: TestDependencies) =>
 						length: 255,
 					},
 				],
-			});
-
-			await db.ddl.addForeignKey({
-				table: 'join_posts_test',
-				columns: ['user_id'],
-				referencesTable: 'join_users_test',
-				referencesColumns: ['id'],
+				foreignKeys: [
+					{
+						columns: ['user_id'],
+						referencesTable: 'join_users_test',
+						referencesColumns: ['id'],
+					},
+				],
 			});
 
 			users = db.getQueryRepository<User>({

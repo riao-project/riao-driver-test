@@ -34,6 +34,14 @@ export const ddlAlterTableTest = (di: TestDependencies) =>
 		});
 
 		it('can add foreign keys', async () => {
+			if (di.options().name.includes('Sqlite')) {
+				console.warn(
+					'Adding foreign keys to existing tables not supported by database'
+				);
+
+				return;
+			}
+
 			await db.ddl.createTable({
 				name: 'alter_fk_test_parent',
 				columns: [
@@ -68,6 +76,12 @@ export const ddlAlterTableTest = (di: TestDependencies) =>
 		});
 
 		it('can change columns', async () => {
+			if (di.options().name.includes('Sqlite')) {
+				console.warn('Alter column not supported by database');
+
+				return;
+			}
+
 			await db.ddl.createTable({
 				name: 'change_columns_test',
 				columns: [

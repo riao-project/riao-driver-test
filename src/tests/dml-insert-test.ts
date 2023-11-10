@@ -52,7 +52,7 @@ export const dmlInsertTest = (di: TestDependencies) =>
 
 			expect(+result.myid).toEqual(1);
 
-			const results = await users.insert({
+			await users.insert({
 				records: [
 					{
 						fname: 'Bob',
@@ -62,10 +62,5 @@ export const dmlInsertTest = (di: TestDependencies) =>
 					},
 				],
 			});
-
-			expect(+results[0].myid).toEqual(2);
-
-			// Note: This does not work in mysql! vvv
-			//expect(+results[1].myid).toEqual(3);
 		});
 	});

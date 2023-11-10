@@ -139,6 +139,15 @@ export const integerTest = (di: TestDependencies) =>
 		});
 
 		it('supports big-int column', async () => {
-			await integerTest(ColumnType.BIGINT, BigInt('9223372036854775807'));
+			if (di.options().name.includes('Sqlite')) {
+				console.warn('Large bigint not supported by db driver (better-sqlite3).');
+				await integerTest(ColumnType.BIGINT, BigInt('922337203685477'));
+			}
+			else {
+				await integerTest(
+					ColumnType.BIGINT,
+					BigInt('9223372036854775807')
+				);
+			}
 		});
 	});

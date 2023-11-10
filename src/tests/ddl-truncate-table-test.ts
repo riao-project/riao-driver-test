@@ -18,13 +18,20 @@ export const ddlTruncateTableTest = (di: TestDependencies) =>
 					{
 						name: 'id',
 						type: ColumnType.INT,
+						primaryKey: true,
+						autoIncrement: true,
+					},
+					{
+						name: 'username',
+						type: ColumnType.VARCHAR,
+						length: 50,
 					},
 				],
 			});
 
 			await db.query.insert({
 				table: 'truncate_test',
-				records: [{ id: 1 }],
+				records: [{ username: 'test' }],
 			});
 
 			await db.ddl.truncate({

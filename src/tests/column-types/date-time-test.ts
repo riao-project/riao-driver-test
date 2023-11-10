@@ -25,6 +25,8 @@ export const dateTimeTest = (di: TestDependencies) =>
 				],
 			});
 
+			await db.buildSchema();
+
 			await db.query.insert({
 				table,
 				records: { expiration_date: max },
@@ -99,6 +101,8 @@ export const dateTimeTest = (di: TestDependencies) =>
 				],
 			});
 
+			await db.buildSchema();
+
 			await db.query.insert({
 				table,
 				records: { expiration: max },
@@ -131,6 +135,8 @@ export const dateTimeTest = (di: TestDependencies) =>
 					},
 				],
 			});
+
+			await db.buildSchema();
 
 			const date = new Date('2048-02-02 05:25:30Z');
 
@@ -167,6 +173,8 @@ export const dateTimeTest = (di: TestDependencies) =>
 					},
 				],
 			});
+
+			await db.buildSchema();
 
 			const date = new Date('2028-02-02 05:25:30 EST');
 
