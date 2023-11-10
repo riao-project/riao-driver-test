@@ -46,6 +46,10 @@ export async function createQueryTestData(
 				fname: 'Tom',
 				email: 'tom@myusers.com',
 			},
+			{
+				fname: 'Bob',
+				email: 'bob2@myusers.com',
+			},
 		],
 	});
 

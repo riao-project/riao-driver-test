@@ -44,6 +44,17 @@ export const dmlFindTest = (di: TestDependencies) =>
 			expect(results[0].email).toEqual('bob@myusers.com');
 		});
 
+		it('can find with select distinct', async () => {
+			const results = await users.find({
+				columns: ['fname'],
+				distinct: true,
+			});
+
+			expect(results.length).toEqual(2);
+			expect(results[0].fname).toEqual('Bob');
+			expect(results[1].fname).toEqual('Tom');
+		});
+
 		it('can find with select columns as', async () => {
 			const results = <DatabaseRecord[]>await users.find({
 				columns: [
@@ -132,7 +143,7 @@ export const dmlFindTest = (di: TestDependencies) =>
 				where: [{ fname: 'Bob' }, 'or', { fname: 'Tom' }],
 			});
 
-			expect(results.length).toBe(2);
+			expect(results.length).toBe(3);
 			expect(+results[0].myid).toEqual(1);
 			expect(+results[1].myid).toEqual(2);
 		});
@@ -146,7 +157,7 @@ export const dmlFindTest = (di: TestDependencies) =>
 				],
 			});
 
-			expect(results.length).toBe(2);
+			expect(results.length).toBe(3);
 			expect(+results[0].myid).toEqual(1);
 			expect(+results[1].myid).toEqual(2);
 		});
@@ -158,7 +169,7 @@ export const dmlFindTest = (di: TestDependencies) =>
 				},
 			});
 
-			expect(results.length).toBe(1);
+			expect(results.length).toBe(2);
 			expect(+results[0].myid).toEqual(1);
 		});
 
@@ -197,7 +208,7 @@ export const dmlFindTest = (di: TestDependencies) =>
 				where: { myid: gt(1) },
 			});
 
-			expect(results.length).toBe(1);
+			expect(results.length).toBe(2);
 			expect(+results[0].myid).toEqual(2);
 		});
 
@@ -206,7 +217,7 @@ export const dmlFindTest = (di: TestDependencies) =>
 				where: { myid: gte(1) },
 			});
 
-			expect(results.length).toBe(2);
+			expect(results.length).toBe(3);
 			expect(+results[0].myid).toEqual(1);
 			expect(+results[1].myid).toEqual(2);
 		});
@@ -216,7 +227,7 @@ export const dmlFindTest = (di: TestDependencies) =>
 				where: { fname: inArray(['Bob', 'Tom']) },
 			});
 
-			expect(results.length).toBe(2);
+			expect(results.length).toBe(3);
 			expect(+results[0].myid).toEqual(1);
 			expect(+results[1].myid).toEqual(2);
 		});
@@ -226,7 +237,7 @@ export const dmlFindTest = (di: TestDependencies) =>
 				where: { fname: not('Tom') },
 			});
 
-			expect(results.length).toBe(1);
+			expect(results.length).toBe(2);
 			expect(+results[0].myid).toEqual(1);
 		});
 
@@ -235,7 +246,7 @@ export const dmlFindTest = (di: TestDependencies) =>
 				where: { email: not(like('tom@%')) },
 			});
 
-			expect(results.length).toBe(1);
+			expect(results.length).toBe(2);
 			expect(+results[0].myid).toEqual(1);
 		});
 
@@ -244,7 +255,7 @@ export const dmlFindTest = (di: TestDependencies) =>
 				where: { fname: not(inArray(['Tom', 'Sally'])) },
 			});
 
-			expect(results.length).toBe(1);
+			expect(results.length).toBe(2);
 			expect(+results[0].myid).toEqual(1);
 		});
 
@@ -260,7 +271,7 @@ export const dmlFindTest = (di: TestDependencies) =>
 			const results = await users.find({
 				columns: ['myid'],
 				where: {
-					myid: lte(5),
+					myid: gte(2),
 				},
 				orderBy: {
 					myid: 'DESC',
@@ -269,6 +280,6 @@ export const dmlFindTest = (di: TestDependencies) =>
 			});
 
 			expect(results?.length).toEqual(1);
-			expect(+results[0].myid).toEqual(2);
+			expect(+results[0].myid).toEqual(3);
 		});
 	});
