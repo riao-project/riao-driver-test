@@ -13,6 +13,7 @@ import { TestOptions } from './test-options';
 import { ddlAlterTableTest } from './tests/ddl-alter-table-test';
 import { ddlCreateDatabaseTest } from './tests/ddl-create-database-test';
 import { schemaQueryRepositoryTest } from './tests/schema-query-repository-test';
+import { dmlCountTest } from './tests/dml-count-test';
 import { dmlFindOneOrFailTest } from './tests/dml-find-one-or-fail-test';
 import { dmlFindOneTest } from './tests/dml-find-one-test';
 import { dmlFindTest } from './tests/dml-find-test';
@@ -52,6 +53,7 @@ export const test = (options: TestOptions) =>
 		ddlCreateTableTest(injector);
 		ddlDropTableTest(injector);
 		ddlTruncateTableTest(injector);
+		dmlCountTest(injector);
 		dmlDeleteTest(injector);
 		dmlFindOneOrFailTest(injector);
 		dmlFindOneTest(injector);
