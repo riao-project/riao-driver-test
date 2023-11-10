@@ -241,6 +241,15 @@ export const dmlFindTest = (di: TestDependencies) =>
 			expect(+results[0].myid).toEqual(1);
 		});
 
+		it('can find where - not null', async () => {
+			const results = await users.find({
+				where: { fname: not(null) },
+			});
+
+			expect(results.length).toBe(3);
+			expect(+results[0].myid).toEqual(1);
+		});
+
 		it('can find where - not like', async () => {
 			const results = await users.find({
 				where: { email: not(like('tom@%')) },
