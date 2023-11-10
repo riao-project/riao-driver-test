@@ -255,4 +255,20 @@ export const dmlFindTest = (di: TestDependencies) =>
 
 			expect(results.length).toBe(0);
 		});
+
+		it('can find with compound query', async () => {
+			const results = await users.find({
+				columns: ['myid'],
+				where: {
+					myid: lte(5),
+				},
+				orderBy: {
+					myid: 'DESC',
+				},
+				limit: 1,
+			});
+
+			expect(results?.length).toEqual(1);
+			expect(+results[0].myid).toEqual(2);
+		});
 	});
