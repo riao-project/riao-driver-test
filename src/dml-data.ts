@@ -32,6 +32,8 @@ export async function createQueryTestData(
 		],
 	});
 
+	await db.buildSchema();
+
 	const userRepo = db.getQueryRepository<User>({
 		table: 'query_test',
 	});

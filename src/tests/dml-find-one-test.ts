@@ -18,6 +18,14 @@ export const dmlFindOneTest = (di: TestDependencies) =>
 			expect(user.email).toEqual('bob@myusers.com');
 		});
 
+		it('can find by ID', async () => {
+			const user = await users.findById(1);
+
+			expect(+user.myid).toEqual(1);
+			expect(user.fname).toEqual('Bob');
+			expect(user.email).toEqual('bob@myusers.com');
+		});
+
 		it('returns the first row if multipe matches are found', async () => {
 			const user = await users.findOneOrFail({
 				where: { fname: like('%') },
