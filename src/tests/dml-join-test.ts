@@ -1,5 +1,6 @@
 import 'jasmine';
 import {
+	and,
 	columnName,
 	ColumnType,
 	Database,
@@ -129,6 +130,35 @@ export const dmlJoinTest = (di: TestDependencies) =>
 				where: <DatabaseRecord>{
 					'join_users_test.fname': 'Bob',
 				},
+			});
+
+			expect(results.length).toEqual(2);
+			expect(+results[0].id).toEqual(1);
+			expect(results[0].title).toEqual('Story of Bob');
+			expect(results[0].fname).toEqual('Bob');
+		});
+
+		it('can join on expression', async () => {
+			const results = <PostWithUser[]>await posts.find({
+				columns: [
+					{ column: 'join_posts_test.id', as: 'id' },
+					{ column: 'join_posts_test.title', as: 'title' },
+					{ column: 'join_users_test.fname', as: 'fname' },
+				],
+				join: [
+					{
+						table: 'join_users_test',
+						on: [
+							{
+								'join_users_test.id': columnName(
+									'join_posts_test.user_id'
+								),
+							},
+							and,
+							{ 'join_users_test.fname': 'Bob' },
+						],
+					},
+				],
 			});
 
 			expect(results.length).toEqual(2);

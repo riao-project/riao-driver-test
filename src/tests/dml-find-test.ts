@@ -1,6 +1,8 @@
 import 'jasmine';
 import {
+	and,
 	columnName,
+	DatabaseFunctions,
 	DatabaseRecord,
 	equals,
 	gt,
@@ -10,7 +12,9 @@ import {
 	lt,
 	lte,
 	not,
+	or,
 	QueryRepository,
+	Subquery,
 } from '@riao/dbal';
 import { TestDependencies } from '../dependency-injection';
 import { User } from '../dml-data';
@@ -18,9 +22,11 @@ import { User } from '../dml-data';
 export const dmlFindTest = (di: TestDependencies) =>
 	describe('Query find()', () => {
 		let users: QueryRepository<User>;
+		let db: QueryRepository;
 
 		beforeAll(() => {
 			users = di.repo();
+			db = di.db().getQueryRepository();
 		});
 
 		it('can find', async () => {
@@ -90,23 +96,65 @@ export const dmlFindTest = (di: TestDependencies) =>
 			expect(results[0].email).toEqual('bob@myusers.com');
 		});
 
+		it('can find with select literal number', async () => {
+			const results = <DatabaseRecord[]>await db.find({
+				columns: [
+					{
+						query: 1,
+						as: 'one',
+					},
+				],
+			});
+
+			expect(results.length).toBeGreaterThanOrEqual(1);
+			expect(+results[0].one).toEqual(1);
+		});
+
+		it('can find with select literal string', async () => {
+			const results = <DatabaseRecord[]>await db.find({
+				columns: [
+					{
+						query: 'one',
+						as: 'first',
+					},
+				],
+			});
+
+			expect(results.length).toBeGreaterThanOrEqual(1);
+			expect(results[0].first).toEqual('one');
+		});
+
+		it('can find with select function', async () => {
+			const results = <DatabaseRecord[]>await users.find({
+				columns: [
+					{
+						query: DatabaseFunctions.count(),
+						as: 'count',
+					},
+				],
+			});
+
+			expect(results.length).toBeGreaterThanOrEqual(1);
+			expect(+results[0].count).toBeGreaterThanOrEqual(1);
+		});
+
 		it('can find with select with subquery', async () => {
 			const results = <DatabaseRecord[]>await users.find({
 				columns: [
 					{
-						query: {
+						query: new Subquery({
 							table: 'query_test',
 							columns: ['myid'],
 							where: { myid: 1 },
-						},
+						}),
 						as: 'first_id',
 					},
 					{
-						query: {
+						query: new Subquery({
 							table: 'query_test',
 							columns: ['fname'],
 							where: { myid: 2 },
-						},
+						}),
 						as: 'second_name',
 					},
 				],
@@ -153,7 +201,7 @@ export const dmlFindTest = (di: TestDependencies) =>
 
 		it('can find where (OR)', async () => {
 			const results = await users.find({
-				where: [{ fname: 'Bob' }, 'or', { fname: 'Tom' }],
+				where: [{ fname: 'Bob' }, or, { fname: 'Tom' }],
 			});
 
 			expect(results.length).toBe(3);
@@ -165,8 +213,8 @@ export const dmlFindTest = (di: TestDependencies) =>
 			const results = await users.find({
 				where: [
 					{ fname: 'Bob' },
-					'or',
-					[{ fname: 'Tom' }, 'and', { email: 'tom@myusers.com' }],
+					or,
+					[{ fname: 'Tom' }, and, { email: 'tom@myusers.com' }],
 				],
 			});
 

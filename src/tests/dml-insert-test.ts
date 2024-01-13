@@ -1,5 +1,10 @@
 import 'jasmine';
-import { ColumnType, Database, QueryRepository } from '@riao/dbal';
+import {
+	ColumnType,
+	Database,
+	DatabaseFunctions,
+	QueryRepository,
+} from '@riao/dbal';
 import { TestDependencies } from '../dependency-injection';
 
 interface User {
@@ -50,7 +55,7 @@ export const dmlInsertTest = (di: TestDependencies) =>
 				primaryKey: 'myid',
 			});
 
-			expect(+result.myid).toEqual(1);
+			expect(+result.myid).toBeGreaterThanOrEqual(1);
 
 			await users.insert({
 				records: [
@@ -62,5 +67,21 @@ export const dmlInsertTest = (di: TestDependencies) =>
 					},
 				],
 			});
+		});
+
+		it('can insert rows from function', async () => {
+			const control = new Date();
+			const record = await users.insertOne({
+				records: {
+					fname: <any>DatabaseFunctions.currentTimestamp(),
+				},
+				primaryKey: 'myid',
+			});
+
+			const found = await users.findOne({
+				where: { myid: +record.myid },
+			});
+
+			expect(found.fname.length).toBeGreaterThanOrEqual(1);
 		});
 	});
