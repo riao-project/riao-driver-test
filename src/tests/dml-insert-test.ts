@@ -49,7 +49,7 @@ export const dmlInsertTest = (di: TestDependencies) =>
 
 		it('can insert rows', async () => {
 			const result = await users.insertOne({
-				records: {
+				record: {
 					fname: 'Test',
 				},
 				primaryKey: 'myid',
@@ -72,7 +72,7 @@ export const dmlInsertTest = (di: TestDependencies) =>
 		it('can insert rows from function', async () => {
 			const control = new Date();
 			const record = await users.insertOne({
-				records: {
+				record: {
 					fname: <any>DatabaseFunctions.currentTimestamp(),
 				},
 				primaryKey: 'myid',
