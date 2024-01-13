@@ -177,6 +177,22 @@ export const dmlFindTest = (di: TestDependencies) =>
 			expect(results[0].email).toEqual('bob@myusers.com');
 		});
 
+		it('can find with group by', async () => {
+			const results: any = await users.find({
+				columns: [
+					'fname',
+					{ query: DatabaseFunctions.count(), as: 'count' },
+				],
+				groupBy: ['fname'],
+			});
+
+			expect(results.length).toEqual(2);
+			expect(results[0].fname).toEqual('Bob');
+			expect(+results[0].count).toEqual(2);
+			expect(results[1].fname).toEqual('Tom');
+			expect(+results[1].count).toEqual(1);
+		});
+
 		it('can find with order by', async () => {
 			const results = await users.find({
 				orderBy: { fname: 'DESC' },
@@ -351,5 +367,26 @@ export const dmlFindTest = (di: TestDependencies) =>
 
 			expect(results?.length).toEqual(1);
 			expect(+results[0].myid).toEqual(3);
+		});
+
+		it('can find with compound query', async () => {
+			const results: any = await users.find({
+				columns: [
+					'fname',
+					{ query: DatabaseFunctions.count(), as: 'count' },
+				],
+				where: {
+					myid: gte(2),
+				},
+				groupBy: ['fname'],
+				orderBy: {
+					fname: 'DESC',
+				},
+				limit: 1,
+			});
+
+			expect(results?.length).toEqual(1);
+			expect(results[0].fname).toEqual('Tom');
+			expect(+results[0].count).toEqual(1);
 		});
 	});
