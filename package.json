@@ -1,6 +1,6 @@
 {
 	"name": "@riao/driver-test",
-	"version": "3.0.0",
+	"version": "3.1.0",
 	"description": "riao-driver-test",
 	"private": "true",
 	"typescript-template": {
@@ -22,7 +22,7 @@
 		"publish": "npm run script -- publish"
 	},
 	"dependencies": {
-		"@riao/dbal": "^3.0.1"
+		"@riao/dbal": "^3.1.0"
 	},
 	"devDependencies": {
 		"@istanbuljs/nyc-config-typescript": "^1.0.2",
@@ -44,7 +44,7 @@
 		"typescript": "^4.9.3"
 	},
 	"peerDependencies": {
-		"@riao/dbal": "^3.0.0"
+		"@riao/dbal": "^3.1.0"
 	},
 	"repository": {
 		"type": "git",

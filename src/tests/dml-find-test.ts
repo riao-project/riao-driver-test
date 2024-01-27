@@ -1,9 +1,11 @@
 import 'jasmine';
 import {
 	and,
+	between,
 	columnName,
 	DatabaseFunctions,
 	DatabaseRecord,
+	divide,
 	equals,
 	gt,
 	gte,
@@ -11,10 +13,14 @@ import {
 	like,
 	lt,
 	lte,
+	minus,
+	modulo,
 	not,
 	or,
+	plus,
 	QueryRepository,
 	Subquery,
+	times,
 } from '@riao/dbal';
 import { TestDependencies } from '../dependency-injection';
 import { User } from '../dml-data';
@@ -261,6 +267,17 @@ export const dmlFindTest = (di: TestDependencies) =>
 			expect(+results[0].myid).toEqual(2);
 		});
 
+		it('like is case-insensitive', async () => {
+			const results = await users.find({
+				where: {
+					email: like('TOM@%'),
+				},
+			});
+
+			expect(results.length).toBe(1);
+			expect(+results[0].myid).toEqual(2);
+		});
+
 		it('can find where - less than', async () => {
 			const results = await users.find({
 				where: { myid: lt(2) },
@@ -297,6 +314,16 @@ export const dmlFindTest = (di: TestDependencies) =>
 			expect(results.length).toBe(3);
 			expect(+results[0].myid).toEqual(1);
 			expect(+results[1].myid).toEqual(2);
+		});
+
+		it('can find where - between', async () => {
+			const results = await users.find({
+				where: { myid: between(2, 4) },
+			});
+
+			expect(results.length).toBe(2);
+			expect(+results[0].myid).toEqual(2);
+			expect(+results[1].myid).toEqual(3);
 		});
 
 		it('can find where - in array', async () => {
@@ -388,5 +415,102 @@ export const dmlFindTest = (di: TestDependencies) =>
 			expect(results?.length).toEqual(1);
 			expect(results[0].fname).toEqual('Tom');
 			expect(+results[0].count).toEqual(1);
+		});
+
+		it('can add', async () => {
+			const result = await db.findOne({
+				columns: [{ query: [1, plus, 2], as: 'sum' }],
+			});
+
+			expect(result.sum).toEqual(3);
+		});
+
+		it('can add decimal numbers', async () => {
+			const result = await db.findOne({
+				columns: [{ query: [1.23, plus, 2], as: 'sum' }],
+			});
+
+			expect(+result.sum).toEqual(3.23);
+		});
+
+		it('can subtract', async () => {
+			const result = await db.findOne({
+				columns: [{ query: [1, minus, 2], as: 'diff' }],
+			});
+
+			expect(result.diff).toEqual(-1);
+		});
+
+		it('can multiply', async () => {
+			const result = await db.findOne({
+				columns: [{ query: [2, times, 4], as: 'product' }],
+			});
+
+			expect(result.product).toEqual(8);
+		});
+
+		it('can divide', async () => {
+			const result = await db.findOne({
+				columns: [{ query: [8, divide, 2], as: 'quotient' }],
+			});
+
+			expect(result.quotient).toEqual(4);
+		});
+
+		it('can modulo', async () => {
+			const result = await db.findOne({
+				columns: [{ query: [8, modulo, 3], as: 'remainder' }],
+			});
+
+			expect(result.remainder).toEqual(2);
+		});
+
+		it('can perform parenthesized equations', async () => {
+			const result = await db.findOne({
+				columns: [{ query: [2, times, [4.2, minus, 2]], as: 'result' }],
+			});
+
+			expect(+result.result).toEqual(4.4);
+		});
+
+		it('can perform math on columns', async () => {
+			const result = await users.find({
+				columns: [
+					{ query: [2, times, columnName('myid')], as: 'myid' },
+				],
+				orderBy: { myid: 'ASC' },
+			});
+
+			expect(+result[0].myid).toEqual(2);
+			expect(+result[1].myid).toEqual(4);
+			expect(+result[2].myid).toEqual(6);
+		});
+
+		it('can select math with functions', async () => {
+			const result = await db.find({
+				columns: [
+					{
+						query: [DatabaseFunctions.count()],
+						as: 'control',
+					},
+					{
+						query: [2, times, DatabaseFunctions.count()],
+						as: 'sample',
+					},
+				],
+				table: users.getTableName(),
+			});
+
+			expect(+result[0].control).toEqual(3);
+			expect(+result[0].sample).toEqual(6);
+		});
+
+		it('can where with decimal math', async () => {
+			const result = await users.find({
+				where: [[columnName('myid'), divide, 2.1], gt(1)],
+			});
+
+			expect(result.length).withContext('number of results').toEqual(1);
+			expect(+result[0].myid).withContext('first id').toEqual(3);
 		});
 	});
