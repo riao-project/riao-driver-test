@@ -238,6 +238,19 @@ export const dmlFindTest = (di: TestDependencies) =>
 			expect(results[0].email).toEqual('bob@myusers.com');
 		});
 
+		it('can find with offset', async () => {
+			const results = await users.find({
+				orderBy: { myid: 'ASC' },
+				limit: 1,
+				offset: 1,
+			});
+
+			expect(results.length).toEqual(1);
+			expect(+results[0].myid).toEqual(2);
+			expect(results[0].fname).toEqual('Tom');
+			expect(results[0].email).toEqual('tom@myusers.com');
+		});
+
 		it('can find with group by', async () => {
 			const results: any = await users.find({
 				columns: [
