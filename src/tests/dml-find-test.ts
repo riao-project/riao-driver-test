@@ -199,6 +199,21 @@ export const dmlFindTest = (di: TestDependencies) =>
 			expect(+results[1].count).toEqual(1);
 		});
 
+		it('can find with having', async () => {
+			const results: any = await users.find({
+				columns: [
+					'fname',
+					{ query: DatabaseFunctions.count(), as: 'count' },
+				],
+				groupBy: ['fname'],
+				having: [DatabaseFunctions.count(), gt(1)],
+			});
+
+			expect(results.length).toEqual(1);
+			expect(results[0].fname).toEqual('Bob');
+			expect(+results[0].count).toEqual(2);
+		});
+
 		it('can find with order by', async () => {
 			const results = await users.find({
 				orderBy: { fname: 'DESC' },
