@@ -20,6 +20,7 @@ import {
 	or,
 	plus,
 	QueryRepository,
+	raw,
 	Subquery,
 	times,
 } from '@riao/dbal';
@@ -171,6 +172,20 @@ export const dmlFindTest = (di: TestDependencies) =>
 			expect(results.length).toBeGreaterThanOrEqual(1);
 			expect(+results[0].first_id).toEqual(1);
 			expect(results[0].second_name).toEqual('Tom');
+		});
+
+		it('can find with raw sql query', async () => {
+			const results = <DatabaseRecord[]>await users.find({
+				columns: [
+					{
+						query: raw('COUNT(*)'),
+						as: 'raw_count',
+					},
+				],
+			});
+
+			expect(results.length).toBeGreaterThanOrEqual(1);
+			expect(+results[0].raw_count).toBeGreaterThanOrEqual(1);
 		});
 
 		it('can find with select with case with value', async () => {
