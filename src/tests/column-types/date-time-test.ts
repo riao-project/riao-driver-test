@@ -1,5 +1,5 @@
 import 'jasmine';
-import { ColumnType, Database } from '@riao/dbal';
+import { ColumnType, Database, DatabaseFunctions } from '@riao/dbal';
 import { TestDependencies } from '../../dependency-injection';
 import { expectDate } from '../../expectations';
 
@@ -154,6 +154,51 @@ export const dateTimeTest = (di: TestDependencies) =>
 				result: results[0].timestamp,
 				expected: date,
 				toleranceSeconds: 0,
+			});
+		});
+
+		it('supports not-null w/ default timestamp', async () => {
+			const table = 'timestamp_defaultval';
+
+			await db.ddl.createTable({
+				name: table,
+				columns: [
+					{
+						name: 'id',
+						type: ColumnType.SMALLINT,
+						primaryKey: true,
+						autoIncrement: true,
+					},
+					{
+						name: 'timestamp',
+						type: ColumnType.TIMESTAMP,
+						default: DatabaseFunctions.currentTimestamp(),
+						required: true,
+					},
+					{
+						name: 'name',
+						type: ColumnType.TEXT,
+						required: true,
+					},
+				],
+			});
+
+			await db.buildSchema();
+
+			const date = new Date();
+
+			await db.query.insert({
+				table,
+				records: [{ name: 'Test' }],
+			});
+
+			const results = await db.query.find({ table });
+
+			expect(results.length).toEqual(1);
+			expectDate({
+				result: results[0].timestamp,
+				expected: date,
+				toleranceSeconds: 10,
 			});
 		});
 
