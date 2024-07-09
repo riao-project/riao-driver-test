@@ -188,6 +188,25 @@ export const dmlFindTest = (di: TestDependencies) =>
 			expect(+results[0].raw_count).toBeGreaterThanOrEqual(1);
 		});
 
+		it('can find with select with case expression', async () => {
+			const results = <DatabaseRecord[]>await users.find({
+				columns: [
+					{
+						query: new CaseExpression({
+							case: [
+								{ when: [4, gt(5)], then: 'four' },
+								{ when: [5, gt(4)], then: 'five' },
+							],
+						}),
+						as: 'result_value',
+					},
+				],
+			});
+
+			expect(results.length).toBeGreaterThanOrEqual(1);
+			expect(results[0].result_value).toEqual('five');
+		});
+
 		it('can find with select with case with value', async () => {
 			const results = <DatabaseRecord[]>await users.find({
 				columns: [
