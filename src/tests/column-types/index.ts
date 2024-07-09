@@ -7,6 +7,7 @@ import { dateTimeTest } from './date-time-test';
 import { decimalTest } from './decimal-test';
 import { integerTest } from './integer-test';
 import { textTest } from './text-test';
+import { uuidTest } from './uuid-test';
 
 export function columnTypesTest(di: TestDependencies) {
 	blobTest(di);
@@ -15,4 +16,5 @@ export function columnTypesTest(di: TestDependencies) {
 	decimalTest(di);
 	integerTest(di);
 	textTest(di);
+	uuidTest(di);
 }

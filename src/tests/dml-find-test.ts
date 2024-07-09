@@ -2,6 +2,7 @@ import 'jasmine';
 import {
 	and,
 	between,
+	CaseExpression,
 	columnName,
 	DatabaseFunctions,
 	DatabaseRecord,
@@ -19,6 +20,7 @@ import {
 	or,
 	plus,
 	QueryRepository,
+	raw,
 	Subquery,
 	times,
 } from '@riao/dbal';
@@ -172,6 +174,59 @@ export const dmlFindTest = (di: TestDependencies) =>
 			expect(results[0].second_name).toEqual('Tom');
 		});
 
+		it('can find with raw sql query', async () => {
+			const results = <DatabaseRecord[]>await users.find({
+				columns: [
+					{
+						query: raw('COUNT(*)'),
+						as: 'raw_count',
+					},
+				],
+			});
+
+			expect(results.length).toBeGreaterThanOrEqual(1);
+			expect(+results[0].raw_count).toBeGreaterThanOrEqual(1);
+		});
+
+		it('can find with select with case expression', async () => {
+			const results = <DatabaseRecord[]>await users.find({
+				columns: [
+					{
+						query: new CaseExpression({
+							case: [
+								{ when: [4, gt(5)], then: 'four' },
+								{ when: [5, gt(4)], then: 'five' },
+							],
+						}),
+						as: 'result_value',
+					},
+				],
+			});
+
+			expect(results.length).toBeGreaterThanOrEqual(1);
+			expect(results[0].result_value).toEqual('five');
+		});
+
+		it('can find with select with case with value', async () => {
+			const results = <DatabaseRecord[]>await users.find({
+				columns: [
+					{
+						query: new CaseExpression({
+							value: 5,
+							case: [
+								{ when: 4, then: 'four' },
+								{ when: 5, then: 'five' },
+							],
+						}),
+						as: 'result_value',
+					},
+				],
+			});
+
+			expect(results.length).toBeGreaterThanOrEqual(1);
+			expect(results[0].result_value).toEqual('five');
+		});
+
 		it('can find with limit', async () => {
 			const results = await users.find({
 				limit: 1,
@@ -181,6 +236,19 @@ export const dmlFindTest = (di: TestDependencies) =>
 			expect(+results[0].myid).toEqual(1);
 			expect(results[0].fname).toEqual('Bob');
 			expect(results[0].email).toEqual('bob@myusers.com');
+		});
+
+		it('can find with offset', async () => {
+			const results = await users.find({
+				orderBy: { myid: 'ASC' },
+				limit: 1,
+				offset: 1,
+			});
+
+			expect(results.length).toEqual(1);
+			expect(+results[0].myid).toEqual(2);
+			expect(results[0].fname).toEqual('Tom');
+			expect(results[0].email).toEqual('tom@myusers.com');
 		});
 
 		it('can find with group by', async () => {
@@ -197,6 +265,21 @@ export const dmlFindTest = (di: TestDependencies) =>
 			expect(+results[0].count).toEqual(2);
 			expect(results[1].fname).toEqual('Tom');
 			expect(+results[1].count).toEqual(1);
+		});
+
+		it('can find with having', async () => {
+			const results: any = await users.find({
+				columns: [
+					'fname',
+					{ query: DatabaseFunctions.count(), as: 'count' },
+				],
+				groupBy: ['fname'],
+				having: [DatabaseFunctions.count(), gt(1)],
+			});
+
+			expect(results.length).toEqual(1);
+			expect(results[0].fname).toEqual('Bob');
+			expect(+results[0].count).toEqual(2);
 		});
 
 		it('can find with order by', async () => {
