@@ -14,6 +14,7 @@ export const dmlCountTest = (di: TestDependencies) =>
 		it('can count', async () => {
 			const count = await users.count({});
 
-			expect(+count).toBe(3);
+			expect(typeof count).toEqual('number');
+			expect(count).toBe(3);
 		});
 	});
