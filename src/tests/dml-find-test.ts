@@ -2,6 +2,7 @@ import 'jasmine';
 import {
 	and,
 	between,
+	CaseExpression,
 	columnName,
 	DatabaseFunctions,
 	DatabaseRecord,
@@ -170,6 +171,26 @@ export const dmlFindTest = (di: TestDependencies) =>
 			expect(results.length).toBeGreaterThanOrEqual(1);
 			expect(+results[0].first_id).toEqual(1);
 			expect(results[0].second_name).toEqual('Tom');
+		});
+
+		it('can find with select with case with value', async () => {
+			const results = <DatabaseRecord[]>await users.find({
+				columns: [
+					{
+						query: new CaseExpression({
+							value: 5,
+							case: [
+								{ when: 4, then: 'four' },
+								{ when: 5, then: 'five' },
+							],
+						}),
+						as: 'result_value',
+					},
+				],
+			});
+
+			expect(results.length).toBeGreaterThanOrEqual(1);
+			expect(results[0].result_value).toEqual('five');
 		});
 
 		it('can find with limit', async () => {
