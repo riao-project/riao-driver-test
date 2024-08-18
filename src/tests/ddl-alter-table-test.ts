@@ -75,6 +75,51 @@ export const ddlAlterTableTest = (di: TestDependencies) =>
 			});
 		});
 
+		it('can add columns with inline foreign keys', async () => {
+			if (di.options().name.includes('Sqlite')) {
+				console.warn(
+					'Adding foreign keys to existing tables not supported by database'
+				);
+
+				return;
+			}
+
+			await db.ddl.createTable({
+				name: 'add_columns_fk_parent',
+				columns: [
+					{
+						name: 'id',
+						type: ColumnType.INT,
+						primaryKey: true,
+					},
+				],
+			});
+
+			await db.ddl.createTable({
+				name: 'add_columns_fk_child',
+				columns: [
+					{
+						name: 'id',
+						type: ColumnType.INT,
+					},
+				],
+			});
+
+			await db.ddl.addColumns({
+				table: 'add_columns_fk_child',
+				columns: [
+					{
+						name: 'parent_id',
+						type: ColumnType.INT,
+						fk: {
+							referencesTable: 'add_columns_fk_parent',
+							referencesColumn: 'id',
+						},
+					},
+				],
+			});
+		});
+
 		it('can change columns', async () => {
 			if (di.options().name.includes('Sqlite')) {
 				console.warn('Alter column not supported by database');
