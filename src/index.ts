@@ -5,6 +5,7 @@ import { User, createQueryTestData } from './dml-data';
 import { TestDependencies } from './dependency-injection';
 
 import { connectionTest } from './tests/connection-test';
+import { ddlConstraintsTest } from './tests/ddl-constraints';
 import { ddlCreateTableTest } from './tests/ddl-create-table-test';
 import { ddlDropTableTest } from './tests/ddl-drop-table-test';
 import { ddlTruncateTableTest } from './tests/ddl-truncate-table-test';
@@ -49,6 +50,7 @@ export const test = (options: TestOptions) =>
 		connectionTest(injector);
 		columnTypesTest(injector);
 		ddlAlterTableTest(injector);
+		ddlConstraintsTest(injector);
 		ddlCreateDatabaseTest(injector);
 		ddlCreateTableTest(injector);
 		ddlDropTableTest(injector);
