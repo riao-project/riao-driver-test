@@ -6,6 +6,7 @@ import { TestDependencies } from './dependency-injection';
 
 import { connectionTest } from './tests/connection-test';
 import { ddlCreateTableTest } from './tests/ddl-create-table-test';
+import { ddlCreateIndexTest } from './tests/ddl-create-index-test';
 import { ddlDropTableTest } from './tests/ddl-drop-table-test';
 import { ddlTruncateTableTest } from './tests/ddl-truncate-table-test';
 import { dmlInsertTest } from './tests/dml-insert-test';
@@ -51,6 +52,7 @@ export const test = (options: TestOptions) =>
 		ddlAlterTableTest(injector);
 		ddlCreateDatabaseTest(injector);
 		ddlCreateTableTest(injector);
+		ddlCreateIndexTest(injector);
 		ddlDropTableTest(injector);
 		ddlTruncateTableTest(injector);
 		dmlCountTest(injector);
