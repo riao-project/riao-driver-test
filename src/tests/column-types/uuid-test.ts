@@ -9,13 +9,6 @@ export const uuidTest = (di: TestDependencies) =>
 
 		beforeAll(async () => {
 			db = di.db();
-
-			if (di.options().name.includes('Postgres 12')) {
-				console.warn(
-					'UUID: Postgres 12 requires enabling "pgcrypto" extension'
-				);
-				await db.driver.query({ sql: 'CREATE EXTENSION pgcrypto' });
-			}
 		});
 
 		it('supports uuid column', async () => {

@@ -20,6 +20,7 @@ import { dmlFindTest } from './tests/dml-find-test';
 import { dmlUpdateTest } from './tests/dml-update-test';
 import { dmlDeleteTest } from './tests/dml-delete-test';
 import { dmlJoinTest } from './tests/dml-join-test';
+import { columnPackTest } from './tests/column-pack';
 import { columnTypesTest } from './tests/column-types';
 import { functionsTest } from './tests/functions';
 import { transactionTest } from './tests/transaction-test';
@@ -40,6 +41,14 @@ export const test = (options: TestOptions) =>
 		beforeAll(async () => {
 			db = await getDatabase(options, true);
 			repo = await createQueryTestData(db);
+
+			if (options.name.includes('Postgres 12')) {
+				console.warn(
+					'UUID: Postgres 12 requires enabling "pgcrypto" extension'
+				);
+
+				await db.driver.query({ sql: 'CREATE EXTENSION pgcrypto' });
+			}
 		});
 
 		afterAll(async () => {
@@ -47,6 +56,7 @@ export const test = (options: TestOptions) =>
 		});
 
 		connectionTest(injector);
+		columnPackTest(injector);
 		columnTypesTest(injector);
 		ddlAlterTableTest(injector);
 		ddlCreateDatabaseTest(injector);
