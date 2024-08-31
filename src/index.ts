@@ -5,7 +5,9 @@ import { User, createQueryTestData } from './dml-data';
 import { TestDependencies } from './dependency-injection';
 
 import { connectionTest } from './tests/connection-test';
+import { ddlConstraintsTest } from './tests/ddl-constraints';
 import { ddlCreateTableTest } from './tests/ddl-create-table-test';
+import { ddlCreateIndexTest } from './tests/ddl-create-index-test';
 import { ddlDropTableTest } from './tests/ddl-drop-table-test';
 import { ddlTruncateTableTest } from './tests/ddl-truncate-table-test';
 import { dmlInsertTest } from './tests/dml-insert-test';
@@ -20,6 +22,7 @@ import { dmlFindTest } from './tests/dml-find-test';
 import { dmlUpdateTest } from './tests/dml-update-test';
 import { dmlDeleteTest } from './tests/dml-delete-test';
 import { dmlJoinTest } from './tests/dml-join-test';
+import { columnPackTest } from './tests/column-pack';
 import { columnTypesTest } from './tests/column-types';
 import { functionsTest } from './tests/functions';
 import { transactionTest } from './tests/transaction-test';
@@ -40,6 +43,14 @@ export const test = (options: TestOptions) =>
 		beforeAll(async () => {
 			db = await getDatabase(options, true);
 			repo = await createQueryTestData(db);
+
+			if (options.name.includes('Postgres 12')) {
+				console.warn(
+					'UUID: Postgres 12 requires enabling "pgcrypto" extension'
+				);
+
+				await db.driver.query({ sql: 'CREATE EXTENSION pgcrypto' });
+			}
 		});
 
 		afterAll(async () => {
@@ -47,10 +58,13 @@ export const test = (options: TestOptions) =>
 		});
 
 		connectionTest(injector);
+		columnPackTest(injector);
 		columnTypesTest(injector);
 		ddlAlterTableTest(injector);
+		ddlConstraintsTest(injector);
 		ddlCreateDatabaseTest(injector);
 		ddlCreateTableTest(injector);
+		ddlCreateIndexTest(injector);
 		ddlDropTableTest(injector);
 		ddlTruncateTableTest(injector);
 		dmlCountTest(injector);
