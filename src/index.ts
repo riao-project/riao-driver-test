@@ -10,7 +10,7 @@ import { ddlCreateTableTest } from './tests/ddl-create-table-test';
 import { ddlCreateTriggerTest } from './tests/ddl-create-trigger-test';
 import { ddlCreateIndexTest } from './tests/ddl-create-index-test';
 import { ddlDropTableTest } from './tests/ddl-drop-table-test';
-import { ddlDropTriggerTest } from './tests/ddl-drop-trigger-tests';
+import { ddlDropTriggerTest } from './tests/ddl-drop-trigger-test';
 import { ddlTruncateTableTest } from './tests/ddl-truncate-table-test';
 import { dmlInsertTest } from './tests/dml-insert-test';
 import { TestOptions } from './test-options';
