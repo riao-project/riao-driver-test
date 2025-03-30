@@ -28,6 +28,7 @@ import { columnPackTest } from './tests/column-pack';
 import { columnTypesTest } from './tests/column-types';
 import { functionsTest } from './tests/functions';
 import { transactionTest } from './tests/transaction-test';
+import { triggersTest } from './tests/triggers';
 
 export const test = (options: TestOptions) =>
 	describe(options.db.name, () => {
@@ -81,6 +82,7 @@ export const test = (options: TestOptions) =>
 		dmlUpdateTest(injector);
 		schemaQueryRepositoryTest(injector);
 		transactionTest(injector);
+		triggersTest(injector);
 
 		functionsTest(injector);
 	});
