@@ -33,6 +33,6 @@ export const bigIntKeyColumnTest = (di: TestDependencies) =>
 			});
 
 			expect(returnId).toEqual(result.id);
-			expect(result.id).toEqual(1);
+			expect(BigInt(result.id)).toEqual(BigInt(1));
 		});
 	});
