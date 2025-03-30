@@ -2,6 +2,7 @@ import 'jasmine';
 import { TestDependencies } from '../../dependency-injection';
 
 import { createTimestampColumnTest } from './date-time/create-timestamp-column-test';
+import { updateTimestampColumnTest } from './date-time/update-timestamp-column-test';
 import { bigIntKeyColumnTest } from './keys/big-int-key-column-test';
 import { intKeyColumnTest } from './keys/int-key-column-test';
 import { uuidKeyColumnTest } from './keys/uuid-key-column-test';
@@ -25,6 +26,7 @@ import { usernameColumnTest } from './user/username-column-test';
 export function columnPackTest(di: TestDependencies) {
 	// Date-Time
 	createTimestampColumnTest(di);
+	updateTimestampColumnTest(di);
 
 	// Keys
 	bigIntKeyColumnTest(di);

@@ -7,8 +7,10 @@ import { TestDependencies } from './dependency-injection';
 import { connectionTest } from './tests/connection-test';
 import { ddlConstraintsTest } from './tests/ddl-constraints';
 import { ddlCreateTableTest } from './tests/ddl-create-table-test';
+import { ddlCreateTriggerTest } from './tests/ddl-create-trigger-test';
 import { ddlCreateIndexTest } from './tests/ddl-create-index-test';
 import { ddlDropTableTest } from './tests/ddl-drop-table-test';
+import { ddlDropTriggerTest } from './tests/ddl-drop-trigger-test';
 import { ddlTruncateTableTest } from './tests/ddl-truncate-table-test';
 import { dmlInsertTest } from './tests/dml-insert-test';
 import { TestOptions } from './test-options';
@@ -26,6 +28,7 @@ import { columnPackTest } from './tests/column-pack';
 import { columnTypesTest } from './tests/column-types';
 import { functionsTest } from './tests/functions';
 import { transactionTest } from './tests/transaction-test';
+import { triggersTest } from './tests/triggers';
 
 export const test = (options: TestOptions) =>
 	describe(options.db.name, () => {
@@ -64,8 +67,10 @@ export const test = (options: TestOptions) =>
 		ddlConstraintsTest(injector);
 		ddlCreateDatabaseTest(injector);
 		ddlCreateTableTest(injector);
+		ddlCreateTriggerTest(injector);
 		ddlCreateIndexTest(injector);
 		ddlDropTableTest(injector);
+		ddlDropTriggerTest(injector);
 		ddlTruncateTableTest(injector);
 		dmlCountTest(injector);
 		dmlDeleteTest(injector);
@@ -77,6 +82,7 @@ export const test = (options: TestOptions) =>
 		dmlUpdateTest(injector);
 		schemaQueryRepositoryTest(injector);
 		transactionTest(injector);
+		triggersTest(injector);
 
 		functionsTest(injector);
 	});
