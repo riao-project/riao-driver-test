@@ -40,7 +40,7 @@ export function textTypesTests(
 
 		it('can insert records', async () => {
 			const name = 'insert_records_test';
-			const text = genearateRandomString(1);
+			const text = generateRandomString(1);
 
 			await db.query.insert({
 				table,
@@ -77,7 +77,7 @@ export function textTypesTests(
 
 		it('can insert long string', async () => {
 			const name = 'insert_long_string_test';
-			const str = genearateRandomString(maxLength);
+			const str = generateRandomString(maxLength);
 
 			await db.query.insert({
 				table,
@@ -235,7 +235,7 @@ export function textTypesTests(
 			});
 		}
 
-		function genearateRandomString(length: number): string {
+		function generateRandomString(length: number): string {
 			const startCode = 32;
 			const codeRange = 64;
 			let str = '';
