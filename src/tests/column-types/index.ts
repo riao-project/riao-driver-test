@@ -1,20 +1,64 @@
 import 'jasmine';
 import { TestDependencies } from '../../dependency-injection';
 
-import { blobTest } from './blob-test';
-import { boolTest } from './bool-test';
-import { dateTimeTest } from './date-time-test';
-import { decimalTest } from './decimal-test';
-import { integerTest } from './integer-test';
-import { textTest } from './text-test';
-import { uuidTest } from './uuid-test';
+// Binary types
+import { blobTest } from './binary/blob-test';
+
+// Boolean types
+import { boolTest } from './boolean/bool-test';
+
+// Date and time types
+import { dateTest } from './dates/date-test';
+import { timeTest } from './dates/time-test';
+import { timestampTest } from './dates/timestamp-test';
+
+// Decimal types
+import { decimalTest } from './decimals/decimal-test';
+import { floatTest } from './decimals/float-test';
+import { doubleTest } from './decimals/double-test';
+
+// Integer types
+import { tinyintTest } from './integers/tinyint-test';
+import { smallintTest } from './integers/smallint-test';
+import { intTest } from './integers/int-test';
+import { bigintTest } from './integers/bigint-test';
+
+// Text types
+import { charTest } from './text/char-test';
+import { varcharTest } from './text/varchar-test';
+import { textTest } from './text/text-test';
+
+// UUID types
+import { uuidTest } from './uuid/uuid-test';
 
 export function columnTypesTest(di: TestDependencies) {
+	// Binary types
 	blobTest(di);
+
+	// Boolean types
 	boolTest(di);
-	dateTimeTest(di);
+
+	// Date and time types
+	dateTest(di);
+	timeTest(di);
+	timestampTest(di);
+
+	// Decimal types
 	decimalTest(di);
-	integerTest(di);
+	floatTest(di);
+	doubleTest(di);
+
+	// Integer types
+	tinyintTest(di);
+	smallintTest(di);
+	intTest(di);
+	bigintTest(di);
+
+	// Text types
+	charTest(di);
+	varcharTest(di);
 	textTest(di);
+
+	// UUID types
 	uuidTest(di);
 }
