@@ -1,6 +1,6 @@
 import 'jasmine';
 import { ColumnType, Database } from '@riao/dbal';
-import { TestDependencies } from '../../dependency-injection';
+import { TestDependencies } from '../../../dependency-injection';
 
 export const boolTest = (di: TestDependencies) =>
 	describe('Data Types - Bool', () => {
@@ -10,8 +10,10 @@ export const boolTest = (di: TestDependencies) =>
 			db = di.db();
 		});
 		it('supports bool column', async () => {
+			const table = getTableName('');
+
 			await db.ddl.createTable({
-				name: 'bool_column_test',
+				name: table,
 				columns: [
 					{
 						type: ColumnType.BOOL,
@@ -21,12 +23,12 @@ export const boolTest = (di: TestDependencies) =>
 			});
 
 			await db.query.insert({
-				table: 'bool_column_test',
+				table,
 				records: [{ is_a_bool: true }, { is_a_bool: false }],
 			});
 
 			const truthyRecords = await db.query.find({
-				table: 'bool_column_test',
+				table,
 				where: {
 					is_a_bool: true,
 				},
@@ -36,7 +38,7 @@ export const boolTest = (di: TestDependencies) =>
 			expect(truthyRecords[0].is_a_bool).toBeTruthy();
 
 			const falsyRecords = await db.query.find({
-				table: 'bool_column_test',
+				table,
 				where: {
 					is_a_bool: false,
 				},
@@ -47,8 +49,10 @@ export const boolTest = (di: TestDependencies) =>
 		});
 
 		it('supports default true', async () => {
+			const table = getTableName('default_true');
+
 			await db.ddl.createTable({
-				name: 'bool_true_column_test',
+				name: table,
 				columns: [
 					{
 						type: ColumnType.INT,
@@ -64,21 +68,21 @@ export const boolTest = (di: TestDependencies) =>
 			});
 
 			await db.query.insert({
-				table: 'bool_true_column_test',
+				table,
 				records: [{ id: 1 }],
 			});
 
-			const records = await db.query.find({
-				table: 'bool_true_column_test',
-			});
+			const records = await db.query.find({ table });
 
 			expect(records.length).toEqual(1);
 			expect(records[0].is_a_bool).toBeTruthy();
 		});
 
 		it('supports default false', async () => {
+			const table = getTableName('default_false');
+
 			await db.ddl.createTable({
-				name: 'bool_false_column_test',
+				name: table,
 				columns: [
 					{
 						type: ColumnType.INT,
@@ -94,21 +98,21 @@ export const boolTest = (di: TestDependencies) =>
 			});
 
 			await db.query.insert({
-				table: 'bool_false_column_test',
+				table,
 				records: [{ id: 1 }],
 			});
 
-			const records = await db.query.find({
-				table: 'bool_false_column_test',
-			});
+			const records = await db.query.find({ table });
 
 			expect(records.length).toEqual(1);
 			expect(records[0].is_a_bool).toBeFalsy();
 		});
 
 		it('supports default null', async () => {
+			const table = getTableName('default_null');
+
 			await db.ddl.createTable({
-				name: 'bool_null_column_test',
+				name: table,
 				columns: [
 					{
 						type: ColumnType.INT,
@@ -124,15 +128,17 @@ export const boolTest = (di: TestDependencies) =>
 			});
 
 			await db.query.insert({
-				table: 'bool_null_column_test',
+				table,
 				records: [{ id: 1 }],
 			});
 
-			const records = await db.query.find({
-				table: 'bool_null_column_test',
-			});
+			const records = await db.query.find({ table });
 
 			expect(records.length).toEqual(1);
 			expect(records[0].is_a_bool).toBeNull();
 		});
+
+		function getTableName(name: string) {
+			return `columns_boolean_bool_${name}`;
+		}
 	});

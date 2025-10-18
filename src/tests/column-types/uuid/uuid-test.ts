@@ -1,11 +1,11 @@
 import 'jasmine';
 import { ColumnType, Database, DatabaseFunctions } from '@riao/dbal';
-import { TestDependencies } from '../../dependency-injection';
+import { TestDependencies } from '../../../dependency-injection';
 
 export const uuidTest = (di: TestDependencies) =>
 	describe('Data Types - UUID', () => {
 		let db: Database;
-		const table = 'uuid_test';
+		const table = 'columns_uuid_uuid';
 
 		beforeAll(async () => {
 			db = di.db();

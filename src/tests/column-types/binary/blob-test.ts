@@ -1,6 +1,6 @@
 import 'jasmine';
 import { ColumnType, Database } from '@riao/dbal';
-import { TestDependencies } from '../../dependency-injection';
+import { TestDependencies } from '../../../dependency-injection';
 
 export const blobTest = (di: TestDependencies) =>
 	describe('Data Types - Blob', () => {
@@ -11,7 +11,7 @@ export const blobTest = (di: TestDependencies) =>
 		});
 
 		it('supports blob column', async () => {
-			const table = 'blob_column_test';
+			const table = 'columns_binary_blob';
 
 			const strlen = 255;
 			const startCode = 0;
