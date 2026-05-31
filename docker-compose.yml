@@ -1,0 +1,114 @@
+version: '3.1'
+services:
+    # MsSql
+    mssql-2017:
+        image: 'mcr.microsoft.com/mssql/server:2017-CU31-ubuntu-18.04'
+        container_name: 'riao-dbal-mssql-2017'
+        ports:
+            - '1433:1433'
+        environment:
+            SA_PASSWORD: 'Rootpassword!234'
+            ACCEPT_EULA: 'Y'
+
+    mssql-2019:
+        image: 'mcr.microsoft.com/mssql/server:2019-CU18-ubuntu-20.04'
+        container_name: 'riao-dbal-mssql-2019'
+        ports:
+            - '1434:1433'
+        environment:
+            SA_PASSWORD: 'Rootpassword!234'
+            ACCEPT_EULA: 'Y'
+
+    mssql-2022:
+        image: 'mcr.microsoft.com/mssql/server:2022-CU6-ubuntu-20.04'
+        container_name: 'riao-dbal-mssql-2022'
+        ports:
+            - '1435:1433'
+        environment:
+            SA_PASSWORD: 'Rootpassword!234'
+            ACCEPT_EULA: 'Y'
+
+    # MySQL
+    mysql-5-7:
+        image: 'mysql:5.7.40'
+        container_name: 'riao-dbal-mysql-5-7'
+        ports:
+            - '3306:3306'
+        environment:
+            MYSQL_ROOT_PASSWORD: 'rootpassword1234'
+            MYSQL_USER: 'riao_root'
+            MYSQL_PASSWORD: 'password1234'
+            MYSQL_DATABASE: 'db'
+
+    mysql-8-0:
+        image: 'mysql:8.0.31'
+        container_name: 'riao-dbal-mysql-8-0'
+        ports:
+            - '3307:3306'
+        environment:
+            MYSQL_ROOT_PASSWORD: 'rootpassword1234'
+            MYSQL_USER: 'riao_root'
+            MYSQL_PASSWORD: 'password1234'
+            MYSQL_DATABASE: 'db'
+
+    mariadb-10-6:
+        image: 'mariadb:10.6'
+        container_name: 'riao-dbal-mariadb-10-6'
+        ports:
+            - '3326:3306'
+        environment:
+            MYSQL_ROOT_PASSWORD: 'rootpassword1234'
+            MYSQL_USER: 'riao_root'
+            MYSQL_PASSWORD: 'password1234'
+            MYSQL_DATABASE: 'db'
+
+    # Postgres
+    postgres-14:
+        image: 'postgres:14'
+        container_name: 'riao-dbal-postgres-14'
+        ports:
+            - '5434:5432'
+        environment:
+            POSTGRES_USER: 'riao_root'
+            POSTGRES_PASSWORD: 'password1234'
+            POSTGRES_DB: 'db'
+
+    postgres-15:
+        image: 'postgres:15'
+        container_name: 'riao-dbal-postgres-15'
+        ports:
+            - '5435:5432'
+        environment:
+            POSTGRES_USER: 'riao_root'
+            POSTGRES_PASSWORD: 'password1234'
+            POSTGRES_DB: 'db'
+
+    postgres-16:
+        image: 'postgres:16'
+        container_name: 'riao-dbal-postgres-16'
+        ports:
+            - '5436:5432'
+        environment:
+            POSTGRES_USER: 'riao_root'
+            POSTGRES_PASSWORD: 'password1234'
+            POSTGRES_DB: 'db'
+
+    postgres-17:
+        image: 'postgres:17'
+        container_name: 'riao-dbal-postgres-17'
+        ports:
+            - '5437:5432'
+        environment:
+            POSTGRES_USER: 'riao_root'
+            POSTGRES_PASSWORD: 'password1234'
+            POSTGRES_DB: 'db'
+
+    postgres-18:
+        image: 'postgres:18'
+        container_name: 'riao-dbal-postgres-18'
+        ports:
+            - '5438:5432'
+        environment:
+            POSTGRES_USER: 'riao_root'
+            POSTGRES_PASSWORD: 'password1234'
+            POSTGRES_DB: 'db'
