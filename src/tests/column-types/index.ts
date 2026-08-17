@@ -28,6 +28,9 @@ import { charTest } from './text/char-test';
 import { varcharTest } from './text/varchar-test';
 import { textTest } from './text/text-test';
 
+// JSON types
+import { jsonTest } from './json/json-test';
+
 // UUID types
 import { uuidTest } from './uuid/uuid-test';
 
@@ -58,6 +61,9 @@ export function columnTypesTest(di: TestDependencies) {
 	charTest(di);
 	varcharTest(di);
 	textTest(di);
+
+	// JSON types
+	jsonTest(di);
 
 	// UUID types
 	uuidTest(di);
