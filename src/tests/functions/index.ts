@@ -12,6 +12,7 @@ import { monthTest } from './month-test';
 import { yearTest } from './year-test';
 import { roundTest } from './round-test';
 import { concatTest } from './concat-test';
+import { existsTest } from './exists-test';
 
 export function functionsTest(di: TestDependencies) {
 	averageTest(di);
@@ -26,4 +27,5 @@ export function functionsTest(di: TestDependencies) {
 	yearTest(di);
 	roundTest(di);
 	concatTest(di);
+	existsTest(di);
 }
