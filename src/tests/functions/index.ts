@@ -11,6 +11,7 @@ import { dayTest } from './day-test';
 import { monthTest } from './month-test';
 import { yearTest } from './year-test';
 import { roundTest } from './round-test';
+import { concatTest } from './concat-test';
 
 export function functionsTest(di: TestDependencies) {
 	averageTest(di);
@@ -24,4 +25,5 @@ export function functionsTest(di: TestDependencies) {
 	monthTest(di);
 	yearTest(di);
 	roundTest(di);
+	concatTest(di);
 }
