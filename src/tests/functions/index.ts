@@ -10,6 +10,7 @@ import { dateTest } from './date-test';
 import { dayTest } from './day-test';
 import { monthTest } from './month-test';
 import { yearTest } from './year-test';
+import { roundTest } from './round-test';
 
 export function functionsTest(di: TestDependencies) {
 	averageTest(di);
@@ -22,4 +23,5 @@ export function functionsTest(di: TestDependencies) {
 	dayTest(di);
 	monthTest(di);
 	yearTest(di);
+	roundTest(di);
 }
