@@ -15,7 +15,7 @@ interface MonthTestRecord {
 }
 
 export const monthTest = (di: TestDependencies) =>
-	fdescribe('Month()', () => {
+	describe('Month()', () => {
 		let db: Database;
 		let repo: QueryRepository<MonthTestRecord>;
 		const table = 'monthfn_test';
