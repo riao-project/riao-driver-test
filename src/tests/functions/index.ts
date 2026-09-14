@@ -7,6 +7,7 @@ import { currentTimestampTest } from './current-timestamp-test';
 import { sumTest } from './sum-test';
 import { averageTest } from './average-test';
 import { dateTest } from './date-test';
+import { dayTest } from './day-test';
 import { yearTest } from './year-test';
 
 export function functionsTest(di: TestDependencies) {
@@ -17,5 +18,6 @@ export function functionsTest(di: TestDependencies) {
 	sumTest(di);
 	currentTimestampTest(di);
 	dateTest(di);
+	dayTest(di);
 	yearTest(di);
 }
