@@ -26,6 +26,7 @@ import { dmlDeleteTest } from './tests/dml-delete-test';
 import { dmlJoinTest } from './tests/dml-join-test';
 import { dmlUnionTest } from './tests/dml-union-test';
 import { dmlIntersectTest } from './tests/dml-intersect-test';
+import { dmlExceptTest } from './tests/dml-except-test';
 import { columnPackTest } from './tests/column-pack';
 import { columnTypesTest } from './tests/column-types';
 import { functionsTest } from './tests/functions';
@@ -83,6 +84,7 @@ export const test = (options: TestOptions) =>
 		dmlJoinTest(injector);
 		dmlUnionTest(injector);
 		dmlIntersectTest(injector);
+		dmlExceptTest(injector);
 		dmlUpdateTest(injector);
 		schemaQueryRepositoryTest(injector);
 		transactionTest(injector);
