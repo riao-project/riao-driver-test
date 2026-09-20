@@ -23,6 +23,9 @@ import { smallintTest } from './integers/smallint-test';
 import { intTest } from './integers/int-test';
 import { bigintTest } from './integers/bigint-test';
 
+// JSON type
+import { jsonTest } from './json/json-test';
+
 // Text types
 import { charTest } from './text/char-test';
 import { varcharTest } from './text/varchar-test';
@@ -53,6 +56,9 @@ export function columnTypesTest(di: TestDependencies) {
 	smallintTest(di);
 	intTest(di);
 	bigintTest(di);
+
+	// JSON type
+	jsonTest(di);
 
 	// Text types
 	charTest(di);
